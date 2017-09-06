@@ -199,6 +199,7 @@
 		<module>paas_redis</module>
 		<module>paas_activiti</module>
 		<module>paas_resource</module>
+		<module>paas_language</module>
 	</modules>
 
 
