@@ -201,6 +201,7 @@
 		<module>paas_resource</module>
 		<module>paas_language</module>
 		<module>pass_schedule</module>
+		<module>paas_logger</module>
 	</modules>
 
 
