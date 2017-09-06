@@ -191,11 +191,11 @@
 	<modules>
 
 		<module>paas_file</module>
-		<module>pass_language</module>
-		<module>paas_schedule</module>
+		
+		
 		<module>paas_portal</module>
 		<module>paas_common</module>
-		<module>paas_log</module>
+		
 		<module>paas_redis</module>
 		<module>paas_activiti</module>
 		<module>paas_resource</module>

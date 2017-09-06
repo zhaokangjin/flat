@@ -1,10 +1,10 @@
-package paas_logger;
+package com.flat.paas.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PaasLoggerApp {
-	private final static Logger log = LoggerFactory.getLogger(PaasLoggerApp.class);
+public class PaasRedisApp {
+	private final static Logger log = LoggerFactory.getLogger(PaasRedisApp.class);
 	/**   
 	 * @Title: main   
 	 * @Description: TODO  格式要求，无实际作用

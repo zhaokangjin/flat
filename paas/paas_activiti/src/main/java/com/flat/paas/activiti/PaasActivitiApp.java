@@ -1,10 +1,10 @@
-package com.flat.paas.common;
+package com.flat.paas.activiti;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PaasCommonApp {
-	private final static Logger log = LoggerFactory.getLogger(PaasCommonApp.class);
+public class PaasActivitiApp {
+	private final static Logger log = LoggerFactory.getLogger(PaasActivitiApp.class);
 
 	/**
 	 * @Title: main
