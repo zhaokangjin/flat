@@ -1,17 +1,70 @@
 package com.flat.paas.file.persistence;
 
+import java.util.List;
+
 import com.flat.paas.file.domain.FileInfo;
 
 public interface FileInfoMapper {
-    int deleteByPrimaryKey(String fileId);
+	/**
+	 * 
+	 * @Title: deleteByPrimaryKey
+	 * @Description: TODO
+	 * @param fileId
+	 * @return
+	 */
+	int deleteByPrimaryKey(String fileId);
 
-    int insert(FileInfo record);
+	/**
+	 * 
+	 * @Title: insert
+	 * @Description: TODO
+	 * @param record
+	 * @return
+	 */
+	int insert(FileInfo record);
 
-    int insertSelective(FileInfo record);
+	/**
+	 * 
+	 * @Title: insertSelective
+	 * @Description: TODO
+	 * @param record
+	 * @return
+	 */
+	int insertSelective(FileInfo record);
 
-    FileInfo selectByPrimaryKey(String fileId);
+	/**
+	 * 
+	 * @Title: selectByPrimaryKey
+	 * @Description: TODO
+	 * @param fileId
+	 * @return
+	 */
+	FileInfo selectByPrimaryKey(String fileId);
 
-    int updateByPrimaryKeySelective(FileInfo record);
+	/**
+	 * 
+	 * @Title: queryList
+	 * @Description: TODO
+	 * @param fileId
+	 * @return
+	 */
+	List<FileInfo> queryList(FileInfo fileId);
 
-    int updateByPrimaryKey(FileInfo record);
+	/**
+	 * 
+	 * @Title: updateByPrimaryKeySelective
+	 * @Description: TODO
+	 * @param record
+	 * @return
+	 */
+	int updateByPrimaryKeySelective(FileInfo record);
+
+	/**
+	 * 
+	 * @Title: updateByPrimaryKey
+	 * @Description: TODO
+	 * @param record
+	 * @return
+	 */
+	int updateByPrimaryKey(FileInfo record);
 }
