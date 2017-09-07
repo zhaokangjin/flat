@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flat.paas.file.persistence.FileRegistryMapper">
+  <resultMap id="BaseResultMap" type="com.flat.paas.file.domain.FileRegistry">
+    <id column="FILEMD5" jdbcType="CHAR" property="filemd5" />
+    <result column="FILE_PATH" jdbcType="VARCHAR" property="filePath" />
+    <result column="RER_COUNT" jdbcType="INTEGER" property="rerCount" />
+    <result column="FILE_SIZE" jdbcType="VARCHAR" property="fileSize" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    FILEMD5, FILE_PATH, RER_COUNT, FILE_SIZE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TFT_FILE_REGISTRY
+    where FILEMD5 = #{filemd5,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TFT_FILE_REGISTRY
+    where FILEMD5 = #{filemd5,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.flat.paas.file.domain.FileRegistry">
+    insert into TFT_FILE_REGISTRY (FILEMD5, FILE_PATH, RER_COUNT, 
+      FILE_SIZE)
+    values (#{filemd5,jdbcType=CHAR}, #{filePath,jdbcType=VARCHAR}, #{rerCount,jdbcType=INTEGER}, 
+      #{fileSize,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.flat.paas.file.domain.FileRegistry">
+    insert into TFT_FILE_REGISTRY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="filemd5 != null">
+        FILEMD5,
+      </if>
+      <if test="filePath != null">
+        FILE_PATH,
+      </if>
+      <if test="rerCount != null">
+        RER_COUNT,
+      </if>
+      <if test="fileSize != null">
+        FILE_SIZE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="filemd5 != null">
+        #{filemd5,jdbcType=CHAR},
+      </if>
+      <if test="filePath != null">
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="rerCount != null">
+        #{rerCount,jdbcType=INTEGER},
+      </if>
+      <if test="fileSize != null">
+        #{fileSize,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.flat.paas.file.domain.FileRegistry">
+    update TFT_FILE_REGISTRY
+    <set>
+      <if test="filePath != null">
+        FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="rerCount != null">
+        RER_COUNT = #{rerCount,jdbcType=INTEGER},
+      </if>
+      <if test="fileSize != null">
+        FILE_SIZE = #{fileSize,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FILEMD5 = #{filemd5,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.flat.paas.file.domain.FileRegistry">
+    update TFT_FILE_REGISTRY
+    set FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      RER_COUNT = #{rerCount,jdbcType=INTEGER},
+      FILE_SIZE = #{fileSize,jdbcType=VARCHAR}
+    where FILEMD5 = #{filemd5,jdbcType=CHAR}
+  </update>
+</mapper>
