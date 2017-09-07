@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flat.paas.language.persistence.CityMapper">
+  <resultMap id="BaseResultMap" type="com.flat.paas.language.domain.City">
+    <id column="CITY_ID" jdbcType="INTEGER" property="cityId" />
+    <result column="PARENT_ID" jdbcType="INTEGER" property="parentId" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="FIRST_LETTER" jdbcType="CHAR" property="firstLetter" />
+    <result column="LEVEL" jdbcType="INTEGER" property="level" />
+    <result column="COUNTRY_CODE" jdbcType="CHAR" property="countryCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CITY_ID, PARENT_ID, CODE, NAME, FIRST_LETTER, LEVEL, COUNTRY_CODE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TLT_CITY
+    where CITY_ID = #{cityId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from TLT_CITY
+    where CITY_ID = #{cityId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.flat.paas.language.domain.City">
+    insert into TLT_CITY (CITY_ID, PARENT_ID, CODE, 
+      NAME, FIRST_LETTER, LEVEL, 
+      COUNTRY_CODE)
+    values (#{cityId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{firstLetter,jdbcType=CHAR}, #{level,jdbcType=INTEGER}, 
+      #{countryCode,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.flat.paas.language.domain.City">
+    insert into TLT_CITY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cityId != null">
+        CITY_ID,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="firstLetter != null">
+        FIRST_LETTER,
+      </if>
+      <if test="level != null">
+        LEVEL,
+      </if>
+      <if test="countryCode != null">
+        COUNTRY_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="firstLetter != null">
+        #{firstLetter,jdbcType=CHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="countryCode != null">
+        #{countryCode,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.flat.paas.language.domain.City">
+    update TLT_CITY
+    <set>
+      <if test="parentId != null">
+        PARENT_ID = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="firstLetter != null">
+        FIRST_LETTER = #{firstLetter,jdbcType=CHAR},
+      </if>
+      <if test="level != null">
+        LEVEL = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="countryCode != null">
+        COUNTRY_CODE = #{countryCode,jdbcType=CHAR},
+      </if>
+    </set>
+    where CITY_ID = #{cityId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.flat.paas.language.domain.City">
+    update TLT_CITY
+    set PARENT_ID = #{parentId,jdbcType=INTEGER},
+      CODE = #{code,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      FIRST_LETTER = #{firstLetter,jdbcType=CHAR},
+      LEVEL = #{level,jdbcType=INTEGER},
+      COUNTRY_CODE = #{countryCode,jdbcType=CHAR}
+    where CITY_ID = #{cityId,jdbcType=INTEGER}
+  </update>
+</mapper>

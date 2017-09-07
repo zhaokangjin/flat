@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flat.paas.language.persistence.CountryMapper">
+  <resultMap id="BaseResultMap" type="com.flat.paas.language.domain.Country">
+    <id column="COUNTRY_CODE" jdbcType="CHAR" property="countryCode" />
+    <result column="CHIANESE_NAME" jdbcType="VARCHAR" property="chianeseName" />
+    <result column="ENGLISH_NAME" jdbcType="VARCHAR" property="englishName" />
+    <result column="PHONE_CODE" jdbcType="VARCHAR" property="phoneCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    COUNTRY_CODE, CHIANESE_NAME, ENGLISH_NAME, PHONE_CODE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TLT_COUNTRY
+    where COUNTRY_CODE = #{countryCode,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TLT_COUNTRY
+    where COUNTRY_CODE = #{countryCode,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.flat.paas.language.domain.Country">
+    insert into TLT_COUNTRY (COUNTRY_CODE, CHIANESE_NAME, ENGLISH_NAME, 
+      PHONE_CODE)
+    values (#{countryCode,jdbcType=CHAR}, #{chianeseName,jdbcType=VARCHAR}, #{englishName,jdbcType=VARCHAR}, 
+      #{phoneCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.flat.paas.language.domain.Country">
+    insert into TLT_COUNTRY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="countryCode != null">
+        COUNTRY_CODE,
+      </if>
+      <if test="chianeseName != null">
+        CHIANESE_NAME,
+      </if>
+      <if test="englishName != null">
+        ENGLISH_NAME,
+      </if>
+      <if test="phoneCode != null">
+        PHONE_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="countryCode != null">
+        #{countryCode,jdbcType=CHAR},
+      </if>
+      <if test="chianeseName != null">
+        #{chianeseName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null">
+        #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneCode != null">
+        #{phoneCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.flat.paas.language.domain.Country">
+    update TLT_COUNTRY
+    <set>
+      <if test="chianeseName != null">
+        CHIANESE_NAME = #{chianeseName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null">
+        ENGLISH_NAME = #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneCode != null">
+        PHONE_CODE = #{phoneCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where COUNTRY_CODE = #{countryCode,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.flat.paas.language.domain.Country">
+    update TLT_COUNTRY
+    set CHIANESE_NAME = #{chianeseName,jdbcType=VARCHAR},
+      ENGLISH_NAME = #{englishName,jdbcType=VARCHAR},
+      PHONE_CODE = #{phoneCode,jdbcType=VARCHAR}
+    where COUNTRY_CODE = #{countryCode,jdbcType=CHAR}
+  </update>
+</mapper>

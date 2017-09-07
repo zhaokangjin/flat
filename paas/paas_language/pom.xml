@@ -6,4 +6,5 @@
     <version>${paas-verion}</version>
   </parent>
   <artifactId>paas_language</artifactId>
+  <name>paas_language</name>
 </project>

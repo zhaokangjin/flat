@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flat.paas.language.persistence.DictionariesItemMapper">
+  <resultMap id="BaseResultMap" type="com.flat.paas.language.domain.DictionariesItem">
+    <id column="DICTIONARY_ID" jdbcType="CHAR" property="dictionaryId" />
+    <id column="KEY_VALUE" jdbcType="VARCHAR" property="keyValue" />
+    <result column="DESCR" jdbcType="VARCHAR" property="descr" />
+    <result column="ITEM_CODE" jdbcType="CHAR" property="itemCode" />
+    <result column="INTERNATIONAL_ID" jdbcType="CHAR" property="internationalId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    DICTIONARY_ID, KEY_VALUE, DESCR, ITEM_CODE, INTERNATIONAL_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.flat.paas.language.domain.DictionariesItemKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TLT_DICTIONARIES_ITEM
+    where DICTIONARY_ID = #{dictionaryId,jdbcType=CHAR}
+      and KEY_VALUE = #{keyValue,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.flat.paas.language.domain.DictionariesItemKey">
+    delete from TLT_DICTIONARIES_ITEM
+    where DICTIONARY_ID = #{dictionaryId,jdbcType=CHAR}
+      and KEY_VALUE = #{keyValue,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.flat.paas.language.domain.DictionariesItem">
+    insert into TLT_DICTIONARIES_ITEM (DICTIONARY_ID, KEY_VALUE, DESCR, 
+      ITEM_CODE, INTERNATIONAL_ID)
+    values (#{dictionaryId,jdbcType=CHAR}, #{keyValue,jdbcType=VARCHAR}, #{descr,jdbcType=VARCHAR}, 
+      #{itemCode,jdbcType=CHAR}, #{internationalId,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.flat.paas.language.domain.DictionariesItem">
+    insert into TLT_DICTIONARIES_ITEM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dictionaryId != null">
+        DICTIONARY_ID,
+      </if>
+      <if test="keyValue != null">
+        KEY_VALUE,
+      </if>
+      <if test="descr != null">
+        DESCR,
+      </if>
+      <if test="itemCode != null">
+        ITEM_CODE,
+      </if>
+      <if test="internationalId != null">
+        INTERNATIONAL_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dictionaryId != null">
+        #{dictionaryId,jdbcType=CHAR},
+      </if>
+      <if test="keyValue != null">
+        #{keyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="descr != null">
+        #{descr,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null">
+        #{itemCode,jdbcType=CHAR},
+      </if>
+      <if test="internationalId != null">
+        #{internationalId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.flat.paas.language.domain.DictionariesItem">
+    update TLT_DICTIONARIES_ITEM
+    <set>
+      <if test="descr != null">
+        DESCR = #{descr,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null">
+        ITEM_CODE = #{itemCode,jdbcType=CHAR},
+      </if>
+      <if test="internationalId != null">
+        INTERNATIONAL_ID = #{internationalId,jdbcType=CHAR},
+      </if>
+    </set>
+    where DICTIONARY_ID = #{dictionaryId,jdbcType=CHAR}
+      and KEY_VALUE = #{keyValue,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.flat.paas.language.domain.DictionariesItem">
+    update TLT_DICTIONARIES_ITEM
+    set DESCR = #{descr,jdbcType=VARCHAR},
+      ITEM_CODE = #{itemCode,jdbcType=CHAR},
+      INTERNATIONAL_ID = #{internationalId,jdbcType=CHAR}
+    where DICTIONARY_ID = #{dictionaryId,jdbcType=CHAR}
+      and KEY_VALUE = #{keyValue,jdbcType=VARCHAR}
+  </update>
+</mapper>
