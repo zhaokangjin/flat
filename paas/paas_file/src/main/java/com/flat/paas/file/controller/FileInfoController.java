@@ -1,7 +1,5 @@
 package com.flat.paas.file.controller;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -9,11 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.flat.paas.file.domain.FileInfo;
 import com.flat.paas.file.service.FileInfoService;
+import com.github.pagehelper.PageInfo;
 /**
  * 
  * @ClassName: FileInfoController   
@@ -69,10 +69,10 @@ public class FileInfoController {
 			throw e;
 		}
 	}
-	public List<FileInfo> queryList(@RequestBody FileInfo fileInfo){
+	public PageInfo<FileInfo> queryList(@RequestBody FileInfo fileInfo, @RequestParam("pageNo") Integer pageNo,@RequestParam("pageSize")Integer pageSize){
 		try {
 			logger.error("FileInfoController>>>queryList>>>fileInfo:" +JSON.toJSONString(fileInfo));
-			return fileInfoService.queryList(fileInfo);
+			return fileInfoService.queryList(fileInfo,pageNo,pageSize);
 		} catch (Exception e) {
 			logger.error("FileInfoController>>>queryList>>>error:" + e.getMessage());
 			throw e;

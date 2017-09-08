@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.flat.paas.file.domain.FileInfo;
 import com.flat.paas.file.persistence.FileInfoMapper;
 import com.flat.paas.file.service.FileInfoService;
+import com.github.pagehelper.PageInfo;
 
 @Service
 public class FileInfoServiceImpl implements FileInfoService {
@@ -55,9 +56,11 @@ public class FileInfoServiceImpl implements FileInfoService {
 		}
 	}
 	@Override
-	public List<FileInfo> queryList(FileInfo fileInfo) {
+	public PageInfo<FileInfo> queryList(FileInfo fileInfo,Integer pageNo,Integer pageSize) {
 		try {
-			return fileInfoMapper.queryList(fileInfo);
+			List<FileInfo> list= fileInfoMapper.selectList(fileInfo);
+			PageInfo<FileInfo> page = new PageInfo<FileInfo>(list);
+			return page;
 		} catch (Exception e) {
 			logger.error("FileInfoServiceImpl>>>queryList>>>error:"+e.getMessage());
 			throw e;

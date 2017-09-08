@@ -1,8 +1,7 @@
 package com.flat.paas.file.service;
 
-import java.util.List;
-
 import com.flat.paas.file.domain.FileInfo;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 文件信息服务接口
@@ -21,12 +20,12 @@ public interface FileInfoService {
 	FileInfo selectByPrimaryKey(String fileId);
 
 	/**
-	 * @Title: queryList
+	 * @Title: queryList  	
 	 * @Description: TODO
 	 * @param fileInfo
 	 * @return
 	 */
-	List<FileInfo> queryList(FileInfo fileInfo);
+	PageInfo<FileInfo> queryList(FileInfo fileInfo,Integer pageNo,Integer pageSize);
 
 	/**
 	 * @Title: insert

@@ -23,6 +23,7 @@ spring:
 mybatis:
   type-aliases-package: com.flat.paas.file.domain
   mapper-locations: classpath*:persistence_mapper/*Mapper.xml
+  config-location: classpath:mybatis-config.xml
 #logging:
  # file: logs/language.log
   #level: debug
