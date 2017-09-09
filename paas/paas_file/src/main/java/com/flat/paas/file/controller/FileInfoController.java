@@ -102,6 +102,16 @@ public class FileInfoController {
 			throw e;
 		}
 	}
+	/**
+	 * 根据映射文件ID查询真实文件的基本信息
+	 * @Title: selectByPrimaryKey   
+	 * @Description: 一个相同的文件可能被多个人引用或共享，可以用此信息查询文件的基本信息  
+	 * @param fileInfo 
+	 * 例如：{"fileId":"000a178f-94ab-11e7-9334-00163e12ae01"}
+	 * @return FileInfo fileInfo
+	 * 例如：
+	 * {"fileId":"000a178f-94ab-11e7-9334-00163e12ae01","originalFile":"ceshi31543","filemd5":"2afsdfddas31543","actualFileName":"2afsdfddas31543.xls","deleteFlag":"Y","creator":"KANGJIN.ZHAO","createTime":1504884773000}
+	 */
 	@RequestMapping(value = "selectByPrimaryKey", method = RequestMethod.POST)
 	public FileInfo selectByPrimaryKey(@RequestBody FileInfo fileInfo){
 		logger.info("FileInfoController>>>selectByPrimaryKey>>>fileInfo:" +JSON.toJSONString(fileInfo));
@@ -117,17 +127,17 @@ public class FileInfoController {
 	 * 分页查询接口
 	 * @Title: queryList   
 	 * @Description: TODO  
-	 * @param fileInfoConditon 
+	 * @param fileInfoConditon  
+	 * 例如:{"fileInfo":{"deleteFlag":"N"},"page":{"pageNum":2,"pageSize":3}}
 	 * @return PageInfo<FileInfo> 
 	 * 返回带有分页参数的对象
-	 * {"endRow":3,"firstPage":1,"hasNextPage":true,"hasPreviousPage":true,"isFirstPage":false,"isLastPage":false,"lastPage":8,"list":[{"actualFileName":"2afsdfddas19.xls","createTime":1504936602000,"creator":"KANGJIN.ZHAO","deleteFlag":"N","fileId":"ac93f6e4-9523-11e7-9334-00163e12ae01","filemd5":"2afsdfddas19","originalFile":"ceshi19"}],"navigatePages":8,"navigatepageNums":[1,2,3,4,5,6,7,8],"nextPage":4,"pageNum":3,"pageSize":1,"pages":30128,"prePage":2,"size":1,"startRow":3,"total":30128}
+	 * {"pageNum":2,"pageSize":3,"size":3,"startRow":4,"endRow":6,"total":30165,"pages":10055,"list":[{"fileId":"5c50580d-9548-11e7-9334-00163e12ae01","originalFile":"ceshi14","filemd5":"2afsdfddas14","actualFileName":"2afsdfddas14.xls","deleteFlag":"N","creator":"KANGJIN.ZHAO","createTime":1504952358000},{"fileId":"5c5b4e75-9548-11e7-9334-00163e12ae01","originalFile":"ceshi15","filemd5":"2afsdfddas15","actualFileName":"2afsdfddas15.xls","deleteFlag":"N","creator":"KANGJIN.ZHAO","createTime":1504952358000},{"fileId":"5c6663b6-9548-11e7-9334-00163e12ae01","originalFile":"ceshi16","filemd5":"2afsdfddas16","actualFileName":"2afsdfddas16.xls","deleteFlag":"N","creator":"KANGJIN.ZHAO","createTime":1504952358000}],"firstPage":1,"prePage":1,"nextPage":3,"lastPage":8,"isFirstPage":false,"isLastPage":false,"hasPreviousPage":true,"hasNextPage":true,"navigatePages":8,"navigatepageNums":[1,2,3,4,5,6,7,8]}
 	 */
 	@RequestMapping(value = "queryList", method = RequestMethod.POST)
-	public PageInfo<FileInfo> queryList(@RequestBody FileInfoConditon fileInfoConditon){
+	public PageInfo<FileInfo> queryList(@RequestBody FileInfoConditon  fileInfoConditon){
 		try {
 			logger.info("FileInfoController>>>queryList>>>fileInfoConditon:" +JSON.toJSONString(fileInfoConditon));
-			// PageHelper.startPage(pageNo, pageSize,"CREATE_TIME DESC"); 
-			return fileInfoService.queryList(fileInfoConditon.get(0),fileInfoConditon.getPageNum(),fileInfoConditon.getPageSize());
+			return fileInfoService.queryList(fileInfoConditon.getFileInfo(),fileInfoConditon.getPage().getPageNum(),fileInfoConditon.getPage().getPageSize());
 		} catch (Exception e) {
 			logger.error("FileInfoController>>>queryList>>>error:" + e.getMessage());
 			throw e;

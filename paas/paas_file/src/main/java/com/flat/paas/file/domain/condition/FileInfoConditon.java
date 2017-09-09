@@ -1,12 +1,23 @@
 package com.flat.paas.file.domain.condition;
 
 import com.flat.paas.file.domain.FileInfo;
-import com.github.pagehelper.Page;
 
-public class FileInfoConditon extends Page<FileInfo>{
-	/**   
-	 * @Fields: serialVersionUID  
-	 * @Todo: TODO  
-	 */ 
-	private static final long serialVersionUID = -9161947707141745263L;
+public class FileInfoConditon{
+	private Page page;
+	private FileInfo FileInfo;
+	
+
+	public Page getPage() {
+		return page;
+	}
+	public void setPage(Page  page) {
+		this.page = page;
+	}
+	public FileInfo getFileInfo() {
+		return FileInfo;
+	}
+	public void setFileInfo(FileInfo fileInfo) {
+		FileInfo = fileInfo;
+	}
+
 }

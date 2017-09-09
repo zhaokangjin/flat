@@ -121,13 +121,13 @@ public class PaasFileAppTest {
 	@Test
 	public void selectList() {
 		FileInfoConditon fileInfoConditon=new FileInfoConditon();
-		FileInfo fileInfo = new FileInfo();
-		fileInfo.setDeleteFlag("Y");
-		fileInfoConditon.add(fileInfo);
-		fileInfoConditon.setPageNum(1);
-		fileInfoConditon.setPageSize(3);
-		fileInfoConditon.getResult();
-		PageInfo<FileInfo> pager=fileInfoController.queryList(fileInfoConditon);
-		System.err.println(JSON.toJSONString(pager));
+//		FileInfo fileInfo = new FileInfo();
+//		fileInfo.setDeleteFlag("Y");
+//		fileInfoConditon.add(fileInfo);
+//		fileInfoConditon.setPageNum(1);
+//		fileInfoConditon.setPageSize(3);
+//		fileInfoConditon.getResult();
+//		PageInfo<FileInfo> pager=fileInfoController.queryList(fileInfoConditon);
+//		System.err.println(JSON.toJSONString(pager));
 	}
 }
