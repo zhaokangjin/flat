@@ -2,22 +2,15 @@ package com.flat.paas.file.domain.condition;
 
 import com.flat.paas.file.domain.FileInfo;
 
-public class FileInfoConditon{
-	private Page page;
-	private FileInfo FileInfo;
-	
+public class FileInfoConditon extends BaseCondition{
 
-	public Page getPage() {
-		return page;
-	}
-	public void setPage(Page  page) {
-		this.page = page;
-	}
+	// 查询过滤条件
+	private FileInfo FileInfo;
+
 	public FileInfo getFileInfo() {
 		return FileInfo;
 	}
 	public void setFileInfo(FileInfo fileInfo) {
 		FileInfo = fileInfo;
 	}
-
 }

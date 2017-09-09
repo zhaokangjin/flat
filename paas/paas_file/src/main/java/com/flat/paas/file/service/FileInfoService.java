@@ -3,6 +3,7 @@ package com.flat.paas.file.service;
 import java.util.List;
 
 import com.flat.paas.file.domain.FileInfo;
+import com.flat.paas.file.domain.condition.FileInfoConditon;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -26,8 +27,9 @@ public interface FileInfoService {
 	 * @Description: TODO
 	 * @param fileInfo
 	 * @return
+	 * @throws Exception 
 	 */
-	PageInfo<FileInfo> queryList(FileInfo record,Integer pageNo,Integer pageSize);
+	PageInfo<FileInfo> queryList(FileInfoConditon  fileInfoConditon) throws Exception;
 
 	/**
 	 * @Title: insert

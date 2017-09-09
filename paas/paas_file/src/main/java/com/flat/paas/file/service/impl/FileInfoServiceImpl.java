@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flat.paas.file.domain.FileInfo;
+import com.flat.paas.file.domain.condition.BeanUtils;
+import com.flat.paas.file.domain.condition.FileInfoConditon;
+import com.flat.paas.file.domain.condition.Page;
 import com.flat.paas.file.persistence.FileInfoMapper;
 import com.flat.paas.file.service.FileInfoService;
 import com.github.pagehelper.PageHelper;
@@ -102,13 +105,28 @@ public class FileInfoServiceImpl implements FileInfoService {
 		}
 	}
 	@Override
-	public PageInfo<FileInfo> queryList(FileInfo fileInfo,Integer pageNo,Integer pageSize) {
+	public PageInfo<FileInfo> queryList(FileInfoConditon  fileInfoConditon) throws Exception {
 		try {
-			
-	        PageHelper.startPage(pageNo, pageSize,"CREATE_TIME DESC");  
+			FileInfo fileInfo=fileInfoConditon.getFileInfo();
+			String field=(String) BeanUtils.getFieldValue(fileInfoConditon,"fieldName");
+			String fieldValue=field.replaceAll("[A-Z]", "_$0").toUpperCase();
+			String sort=(String) BeanUtils.getFieldValue(fileInfoConditon,"sort");
+			String sortByField="";
+			if(null!=field && null!=sort){
+				sortByField=fieldValue+" "+sort.toUpperCase();
+			}
+			Page page=fileInfoConditon.getPage();
+			if(null!=page){
+				int pageNum=page.getPageNum();
+				int pageSize=page.getPageSize();
+				if(pageNum>0 && pageSize>0){
+					//分页查询
+					PageHelper.startPage(pageNum, pageSize,sortByField);  
+				}
+			}
 			List<FileInfo> list= fileInfoMapper.selectList(fileInfo);
-			PageInfo<FileInfo> page = new PageInfo<FileInfo>(list);
-			return page;
+			PageInfo<FileInfo> pageData = new PageInfo<FileInfo>(list);
+			return pageData;
 		} catch (Exception e) {
 			logger.error("FileInfoServiceImpl>>>queryList>>>error:"+e.getMessage());
 			throw e;

@@ -1,5 +1,6 @@
 package com.flat.paas.file.controller;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.flat.paas.file.domain.FileInfo;
+import com.flat.paas.file.domain.condition.BeanUtils;
 import com.flat.paas.file.domain.condition.FileInfoConditon;
 import com.flat.paas.file.service.FileInfoService;
 import com.github.pagehelper.PageInfo;
@@ -126,18 +128,20 @@ public class FileInfoController {
 	/**
 	 * 分页查询接口
 	 * @Title: queryList   
-	 * @Description: TODO  
+	 * @Description: 规范：所有需要分页查询的接口,条件对象必须继承page对象，前台参数必须给定。需要按指定字段排序的，必须给出该字段对应的属性以及升序还是降序规则
 	 * @param fileInfoConditon  
-	 * 例如:{"fileInfo":{"deleteFlag":"N"},"page":{"pageNum":2,"pageSize":3}}
+	 * 例如:{"fileInfo":{"deleteFlag":"Y"},"page":{"pageNum":"1","pageSize":"4"},"fieldName":"fileId","sort":"desc"}
+	 * fieldName 执行需要排序的列;sort 指定升序还是降序(DESC降序,ASC升序);page 分页查询条件对象 pageNum 查询当前页，pageSize查出当前页面大小
 	 * @return PageInfo<FileInfo> 
-	 * 返回带有分页参数的对象
+	 * 返回带有分页参数的对象,如果入参不带page对象,那么将会查询全部数据，且不带排序功能。当数据量很大的时候，会给前台带来严重的压力，请慎用
 	 * {"pageNum":2,"pageSize":3,"size":3,"startRow":4,"endRow":6,"total":30165,"pages":10055,"list":[{"fileId":"5c50580d-9548-11e7-9334-00163e12ae01","originalFile":"ceshi14","filemd5":"2afsdfddas14","actualFileName":"2afsdfddas14.xls","deleteFlag":"N","creator":"KANGJIN.ZHAO","createTime":1504952358000},{"fileId":"5c5b4e75-9548-11e7-9334-00163e12ae01","originalFile":"ceshi15","filemd5":"2afsdfddas15","actualFileName":"2afsdfddas15.xls","deleteFlag":"N","creator":"KANGJIN.ZHAO","createTime":1504952358000},{"fileId":"5c6663b6-9548-11e7-9334-00163e12ae01","originalFile":"ceshi16","filemd5":"2afsdfddas16","actualFileName":"2afsdfddas16.xls","deleteFlag":"N","creator":"KANGJIN.ZHAO","createTime":1504952358000}],"firstPage":1,"prePage":1,"nextPage":3,"lastPage":8,"isFirstPage":false,"isLastPage":false,"hasPreviousPage":true,"hasNextPage":true,"navigatePages":8,"navigatepageNums":[1,2,3,4,5,6,7,8]}
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "queryList", method = RequestMethod.POST)
-	public PageInfo<FileInfo> queryList(@RequestBody FileInfoConditon  fileInfoConditon){
+	public PageInfo<FileInfo> queryList(@RequestBody FileInfoConditon  fileInfoConditon) throws Exception{
 		try {
 			logger.info("FileInfoController>>>queryList>>>fileInfoConditon:" +JSON.toJSONString(fileInfoConditon));
-			return fileInfoService.queryList(fileInfoConditon.getFileInfo(),fileInfoConditon.getPage().getPageNum(),fileInfoConditon.getPage().getPageSize());
+			return fileInfoService.queryList(fileInfoConditon);
 		} catch (Exception e) {
 			logger.error("FileInfoController>>>queryList>>>error:" + e.getMessage());
 			throw e;

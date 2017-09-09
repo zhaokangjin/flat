@@ -120,7 +120,7 @@ public class PaasFileAppTest {
 
 	@Test
 	public void selectList() {
-		FileInfoConditon fileInfoConditon=new FileInfoConditon();
+//		FileInfoConditon fileInfoConditon=new FileInfoConditon();
 //		FileInfo fileInfo = new FileInfo();
 //		fileInfo.setDeleteFlag("Y");
 //		fileInfoConditon.add(fileInfo);
