@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.flat</groupId>
     <artifactId>paas</artifactId>
-    <version>${paas-verion}</version>
+    <version>${pass-version}</version>
   </parent>
   <artifactId>paas_redis</artifactId>
 </project>

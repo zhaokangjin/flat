@@ -1,5 +1,7 @@
 package com.flat.paas.file.service;
 
+import java.util.List;
+
 import com.flat.paas.file.domain.FileInfo;
 import com.github.pagehelper.PageInfo;
 
@@ -17,7 +19,7 @@ public interface FileInfoService {
 	 * @param fileId
 	 * @return
 	 */
-	FileInfo selectByPrimaryKey(String fileId);
+	FileInfo selectByPrimaryKey(String id);
 
 	/**
 	 * @Title: queryList  	
@@ -25,7 +27,7 @@ public interface FileInfoService {
 	 * @param fileInfo
 	 * @return
 	 */
-	PageInfo<FileInfo> queryList(FileInfo fileInfo,Integer pageNo,Integer pageSize);
+	PageInfo<FileInfo> queryList(FileInfo record,Integer pageNo,Integer pageSize);
 
 	/**
 	 * @Title: insert
@@ -33,7 +35,7 @@ public interface FileInfoService {
 	 * @param fileInfo
 	 * @return
 	 */
-	void insert(FileInfo fileInfo);
+	void insert(FileInfo record);
 
 	/**
 	 * @Title: insertSelective
@@ -41,27 +43,44 @@ public interface FileInfoService {
 	 * @param fileInfo
 	 * @return
 	 */
-	void insertSelective(FileInfo fileInfo);
-
+	void insertSelective(FileInfo record);
+	
+	/**
+	 * 
+	 * @Title: insertBatch   
+	 * @Description: TODO  
+	 * @param record
+	 */
+	void insertBatch(List<FileInfo> record);
 	/**
 	 * @Title: deleteByPrimaryKey
 	 * @Description: TODO
 	 * @param fileId
 	 */
-	void deleteByPrimaryKey(String fileId);
-
+	void deleteByPrimaryKey(String id);
+	/**
+	 * 
+	 * @Title: deleteByPrimaryKeyS   
+	 * @Description: TODO  
+	 * @param id
+	 */
+	void deleteByPrimaryKeySoft(String id);
+	void deleteList(List<FileInfo> record);
+	
+	void deleteListSoft(List<FileInfo> record);
+	
 	/**
 	 * @Title: updateByPrimaryKey
 	 * @Description: TODO
 	 * @param fileInfo
 	 */
-	void updateByPrimaryKey(FileInfo fileInfo);
+	void updateByPrimaryKey(FileInfo record);
 
 	/**
 	 * @Title: updateByPrimaryKeySelective
 	 * @Description: TODO
 	 * @param fileInfo
 	 */
-	void updateByPrimaryKeySelective(FileInfo fileInfo);
+	void updateByPrimaryKeySelective(FileInfo record);
 
 }

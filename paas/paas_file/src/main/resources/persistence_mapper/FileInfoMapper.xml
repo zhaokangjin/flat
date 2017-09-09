@@ -37,6 +37,9 @@
 		<if test="actualFileName != null">
 			AND ACTUAL_FILE_NAME = #{actualFileName,jdbcType=VARCHAR}
 		</if>
+		<if test="deleteFlag!=null">
+			AND DELETE_FLAG=#{deleteFlag,jdbcType=CHAR}
+		</if>
 	</select>
 	<insert id="insert" parameterType="com.flat.paas.file.domain.FileInfo">
 		<selectKey keyProperty="fileId" resultType="java.lang.String" order="BEFORE">
@@ -50,7 +53,6 @@
 		#{createTime,jdbcType=TIMESTAMP})
 	</insert>
 	<!-- 批量插入 -->
-
 	<insert id="insertSelective" parameterType="com.flat.paas.file.domain.FileInfo">
 		<selectKey keyProperty="fileId" resultType="java.lang.String" order="BEFORE">
 			SELECT UUID()
@@ -103,20 +105,14 @@
 			</if>
 		</trim>
 	</insert>
-	<insert id="insertByBatch" parameterType="com.flat.paas.file.domain.FileInfo">
-		<selectKey keyProperty="fileId" resultType="java.lang.String" order="BEFORE">
-			SELECT UUID()
-		</selectKey>
-		insert into TFT_FILE_INFO (FILE_ID, ORIGINAL_FILE, FILEMD5,
-		ACTUAL_FILE_NAME, DELETE_FLAG, CREATOR,
-		CREATE_TIME)
-		values
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into TFT_FILE_INFO (FILE_ID, ORIGINAL_FILE, FILEMD5 ,ACTUAL_FILE_NAME, DELETE_FLAG, CREATOR, CREATE_TIME) values
 		<foreach collection="list" item="item" index="index" separator=",">
-			(#{fileId,jdbcType=CHAR}, #{originalFile,jdbcType=VARCHAR}, #{filemd5,jdbcType=CHAR},
-			#{actualFileName,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=CHAR}, #{creator,jdbcType=CHAR},
-			#{createTime,jdbcType=TIMESTAMP})
+			(
+			#{item.fileId,jdbcType=VARCHAR},#{item.originalFile,jdbcType=VARCHAR}, #{item.filemd5,jdbcType=CHAR}, #{item.actualFileName,jdbcType=VARCHAR}, #{item.deleteFlag,jdbcType=CHAR}, #{item.creator,jdbcType=CHAR}, #{item.createTime,jdbcType=TIMESTAMP}
+			)
 		</foreach>
-	</insert>	
+	</insert>
 	<!-- 物理删除 -->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from TFT_FILE_INFO
@@ -124,30 +120,22 @@
 	</delete>
 	<!-- 物理批量删除 -->
 	<!-- DELETE from TFT_FILE_INFO where FILE_ID in('88cd681a-93de-11e7-9334-00163e12ae01'); -->
-	<delete id="deleteList" parameterType="com.flat.paas.file.domain.FileInfo">
-		DELETE from TFT_FILE_INFO where FILE_ID in
+	<delete id="deleteList" parameterType="java.util.List">
+		DELETE FROM TFT_FILE_INFO where FILE_ID in
 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
 			#{item.fileId,jdbcType=CHAR}
 		</foreach>
 	</delete>
 	<!-- 软删除 -->
 	<update id="deleteByPrimaryKeySoft" parameterType="com.flat.paas.file.domain.FileInfo">
-		update TFT_FILE_INFO
-		<set>
-			<if test="deleteFlag != null">
-				DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
-			</if>
-		</set>
+		update TFT_FILE_INFO SET
+		DELETE_FLAG = 'Y'
 		where FILE_ID = #{fileId,jdbcType=CHAR}
 	</update>
 	<!-- 软批量删除 -->
 	<update id="deleteListSoft" parameterType="com.flat.paas.file.domain.FileInfo">
-		update TFT_FILE_INFO
-		<set>
-			<if test="deleteFlag != null">
-				DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
-			</if>
-		</set>
+		update TFT_FILE_INFO SET
+		DELETE_FLAG = 'Y'
 		where FILE_ID in
 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
 			#{item.fileId,jdbcType=CHAR}
