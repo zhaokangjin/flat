@@ -92,7 +92,6 @@
 		where FILE_ID = #{fileId,jdbcType=CHAR}
 	</delete>
 	<!-- 物理批量删除 -->
-	<!-- DELETE from TFT_FILE_INFO where FILE_ID in('88cd681a-93de-11e7-9334-00163e12ae01'); -->
 	<delete id="deleteList" parameterType="java.util.List">
 		DELETE FROM TFT_FILE_INFO where FILE_ID in
 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
@@ -169,7 +168,7 @@
 			</if>
 		</foreach>
 	</update>
-		<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from TFT_FILE_INFO

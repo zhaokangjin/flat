@@ -1,6 +1,12 @@
 package com.flat.paas.file.domain.condition;
 
-public class BaseCondition {
+import java.io.Serializable;
+
+public class BaseCondition implements Serializable{
+	/**   
+	 * @Fields: serialVersionUID  
+	 */ 
+	private static final long serialVersionUID = 3813388848148269909L;
 	// 分页对象
 	private Page page;
 	// 排序 升序或降序

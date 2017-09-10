@@ -2,39 +2,31 @@ package com.flat.paas.file.controller;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
-import com.flat.paas.file.domain.FileInfo;
-import com.flat.paas.file.domain.condition.FileInfoConditon;
+//import com.flat.paas.file.domain.FileInfo;
+import com.flat.paas.file.domain.FileRegistry;
+import com.flat.paas.file.domain.condition.FileRegistryConditon;
 import com.flat.paas.file.service.FileInfoService;
+import com.flat.paas.file.service.FileRegistryService;
 import com.github.pagehelper.PageInfo;
 
-/**
- * 
- * @ClassName: FileInfoController
- * @Description: 文件创建及引用查询接口，可以得知该文件的使用频率
- * @author: kangjin.zhao
- * @date:2017年9月7日 下午10:55:33
- */
-@RestController
-@ControllerAdvice
-@RequestMapping("fileInfo")
-public class FileInfoController {
+import oracle.net.aso.e;
+
+public class FileRegistryController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Resource
 	FileInfoService fileInfoService;
-
+	@Resource
+	FileRegistryService fileRegistryService;
 	/**
 	 * 新增单条记录
 	 * 
@@ -46,14 +38,14 @@ public class FileInfoController {
 	 * @return String "051cd8ed-95cd-11e7-9334-00163e12ae01"
 	 */
 	@RequestMapping(value = "insert", method = RequestMethod.POST)
-	public String insert(@RequestBody FileInfo fileInfo) {
+	public String insert(@RequestBody FileRegistry record) {
 		try {
-			logger.info("FileInfoController>>>insert>>>record:" + JSON.toJSONString(fileInfo));
-			fileInfo.setCreateTime(new Date());
-			fileInfoService.insert(fileInfo);
-			return fileInfo.getFileId();
+			logger.info("FileRegistryController>>>insert>>>record:" + JSON.toJSONString(record));
+			record.setCreateTime(new Date());
+			fileRegistryService.insert(record);
+			return record.getFilemd5();
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>insert>>>error:" + e.getMessage());
+			logger.error("FileRegistryController>>>insert>>>error:" + e.getMessage());
 			throw e;
 		}
 	}
@@ -74,17 +66,16 @@ public class FileInfoController {
 	 *         ","filemd5":"2afsdfddas19","actualFileName":"康进测试新增2.xls","deleteFlag":"Y","creator":"KANGJIN.ZHAO","createTime":1505009563197}]
 	 */
 	@RequestMapping(value = "insertBatch", method = RequestMethod.POST)
-	public List<FileInfo> insertBatch(@RequestBody List<FileInfo> fileInfoList) {
+	public List<FileRegistry> insertBatch(@RequestBody List<FileRegistry> record) {
 		try {
-			logger.info("FileInfoController>>>insertBatch>>>record:" + JSON.toJSONString(fileInfoList));
-			for (int i = 0; i < fileInfoList.size(); i++) {
-				fileInfoList.get(i).setCreateTime(new Date());
-				fileInfoList.get(i).setFileId(UUID.randomUUID().toString());
+			logger.info("FileRegistryController>>>insertBatch>>>record:" + JSON.toJSONString(record));
+			for (int i = 0; i < record.size(); i++) {
+				record.get(i).setCreateTime(new Date());
 			}
-			fileInfoService.insertBatch(fileInfoList);
-			return fileInfoList;
+			fileRegistryService.insertBatch(record);
+			return record;
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>insertBatch>>>error:" + e.getMessage());
+			logger.error("FileRegistryController>>>insertBatch>>>error:" + e.getMessage());
 			throw e;
 		}
 	}
@@ -100,13 +91,13 @@ public class FileInfoController {
 	 * @exception e
 	 */
 	@RequestMapping(value = "deleteByPrimaryKey", method = RequestMethod.POST)
-	public int deleteByPrimaryKey(@RequestBody FileInfo fileInfo) {
+	public int deleteByPrimaryKey(@RequestBody FileRegistry record) {
 		try {
-			logger.info("FileInfoController>>>deleteByPrimaryKey>>>record:" + JSON.toJSONString(fileInfo));
-			fileInfoService.deleteByPrimaryKey(fileInfo.getFileId());
+			logger.info("FileRegistryController>>>deleteByPrimaryKey>>>record:" + JSON.toJSONString(record));
+			fileRegistryService.deleteByPrimaryKey(record.getFilemd5());
 			return 1;
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>deleteByPrimaryKey>>>error:" + e.getMessage());
+			logger.error("FileRegistryController>>>deleteByPrimaryKey>>>error:" + e.getMessage());
 			throw e;
 		}
 	}
@@ -122,13 +113,13 @@ public class FileInfoController {
 	 * @exception e
 	 */
 	@RequestMapping(value = "deleteByPrimaryKeySoft", method = RequestMethod.POST)
-	public int deleteByPrimaryKeySoft(@RequestBody FileInfo fileInfo) {
+	public int deleteByPrimaryKeySoft(@RequestBody FileRegistry record) {
 		try {
-			logger.info("FileInfoController>>>deleteByPrimaryKeySoft>>>record:" + JSON.toJSONString(fileInfo));
-			fileInfoService.deleteByPrimaryKeySoft(fileInfo.getFileId());
+			logger.info("FileRegistryController>>>deleteByPrimaryKeySoft>>>record:" + JSON.toJSONString(record));
+			fileRegistryService.deleteByPrimaryKeySoft(record.getFilemd5());
 			return 1;
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>deleteByPrimaryKeySoft>>>error:" + e.getMessage());
+			logger.error("FileRegistryController>>>deleteByPrimaryKeySoft>>>error:" + e.getMessage());
 			throw e;
 		}
 	}
@@ -143,13 +134,13 @@ public class FileInfoController {
 	 * @exception
 	 */
 	@RequestMapping(value = "deleteList", method = RequestMethod.POST)
-	public int deleteList(@RequestBody List<FileInfo> record) {
+	public int deleteList(@RequestBody List<FileRegistry> record) {
 		try {
-			logger.info("FileInfoController>>>deleteList>>>record:" + JSON.toJSONString(record));
-			fileInfoService.deleteList(record);
+			logger.info("FileRegistryController>>>deleteList>>>record:" + JSON.toJSONString(record));
+			fileRegistryService.deleteList(record);
 			return 1;
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>deleteList>>>error:" + e.getMessage());
+			logger.error("FileRegistryController>>>deleteList>>>error:" + e.getMessage());
 			throw e;
 		}
 	}
@@ -164,13 +155,13 @@ public class FileInfoController {
 	 * @exception e
 	 */
 	@RequestMapping(value = "deleteListSoft", method = RequestMethod.POST)
-	public int deleteListSoft(@RequestBody List<FileInfo> fileInfoList) {
+	public int deleteListSoft(@RequestBody List<FileRegistry> fileInfoList) {
 		try {
-			logger.info("FileInfoController>>>deleteListSoft>>>deleteListSoft:" + JSON.toJSONString(fileInfoList));
-			fileInfoService.deleteListSoft(fileInfoList);
+			logger.info("FileRegistryController>>>deleteListSoft>>>deleteListSoft:" + JSON.toJSONString(fileInfoList));
+			fileRegistryService.deleteListSoft(fileInfoList);
 			return 1;
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>deleteListSoft>>>error:" + e.getMessage());
+			logger.error("FileRegistryController>>>deleteListSoft>>>error:" + e.getMessage());
 			throw e;
 		}
 	}
@@ -185,13 +176,13 @@ public class FileInfoController {
 	 * @exception e
 	 */
 	@RequestMapping(value = "updateByPrimaryKey", method = RequestMethod.POST)
-	public int updateByPrimaryKey(@RequestBody FileInfo fileInfo) {
+	public int updateByPrimaryKey(@RequestBody FileRegistry fileInfo) {
 		try {
-			logger.info("FileInfoController>>>updateByPrimaryKey>>>record:" + JSON.toJSONString(fileInfo));
-			fileInfoService.updateByPrimaryKey(fileInfo);
+			logger.info("FileRegistryController>>>updateByPrimaryKey>>>record:" + JSON.toJSONString(fileInfo));
+			fileRegistryService.updateByPrimaryKey(fileInfo);
 			return 1;
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>updateByPrimaryKey>>>error:" + e.getMessage());
+			logger.error("FileRegistryController>>>updateByPrimaryKey>>>error:" + e.getMessage());
 			throw e;
 		}
 	}
@@ -208,13 +199,13 @@ public class FileInfoController {
 	 * @exception e
 	 */
 	@RequestMapping(value = "updateByPrimaryKeySelective", method = RequestMethod.POST)
-	public int updateByPrimaryKeySelective(@RequestBody FileInfo fileInfo) {
+	public int updateByPrimaryKeySelective(@RequestBody FileRegistry record) {
 		try {
-			logger.info("FileInfoController>>>updateByPrimaryKeySelective>>>record:" + JSON.toJSONString(fileInfo));
-			fileInfoService.updateByPrimaryKeySelective(fileInfo);
+			logger.info("FileRegistryController>>>updateByPrimaryKeySelective>>>record:" + JSON.toJSONString(record));
+			fileRegistryService.updateByPrimaryKeySelective(record);
 			return 1;
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>updateByPrimaryKeySelective>>>error:" + e.getMessage());
+			logger.error("FileRegistryController>>>updateByPrimaryKeySelective>>>error:" + e.getMessage());
 			throw e;
 		}
 	}
@@ -229,20 +220,19 @@ public class FileInfoController {
 	 * @exception e
 	 */
 	@RequestMapping(value = "updateOrInsertBatch", method = RequestMethod.POST)
-	public int updateOrInsertBatch(@RequestBody List<FileInfo> fileInfoList) {
+	public int updateOrInsertBatch(@RequestBody List<FileRegistry> record) {
 		try {
-			logger.info("FileInfoController>>>updateOrInsertBatch>>>record:" + JSON.toJSONString(fileInfoList));
-			fileInfoService.updateList(fileInfoList);
-			return fileInfoList.size();
+			logger.info("FileRegistryController>>>updateOrInsertBatch>>>record:" + JSON.toJSONString(record));
+			fileRegistryService.updateList(record);
+			return record.size();
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>updateOrInsertBatch>>>error:" + e.getMessage());
+			logger.error("FileRegistryController>>>updateOrInsertBatch>>>error:" + e.getMessage());
 			throw e;
 		}
 	}
 
 	/**
 	 * 根据映射文件ID查询真实文件的基本信息
-	 * 
 	 * @Title: selectByPrimaryKey
 	 * @Description: 一个相同的文件可能被多个人引用或共享，可以用此信息查询文件的基本信息
 	 * @param record
@@ -252,13 +242,12 @@ public class FileInfoController {
 	 * @exception e
 	 */
 	@RequestMapping(value = "selectByPrimaryKey", method = RequestMethod.POST)
-	public FileInfo selectByPrimaryKey(@RequestBody FileInfo fileInfo) {
-		logger.info("FileInfoController>>>selectByPrimaryKey>>>record:" + JSON.toJSONString(fileInfo));
+	public FileRegistry selectByPrimaryKey(@RequestBody FileRegistry record) {
+		logger.info("FileRegistryController>>>selectByPrimaryKey>>>record:" + JSON.toJSONString(record));
 		try {
-			FileInfo retFileInfo = fileInfoService.selectByPrimaryKey(fileInfo.getFileId());
-			return retFileInfo;
+			return fileRegistryService.selectByPrimaryKey(record.getFilemd5());
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>selectByPrimaryKey>>>error:" + e.getMessage());
+			logger.error("FileRegistryController>>>selectByPrimaryKey>>>error:" + e.getMessage());
 			throw e;
 		}
 	}
@@ -277,12 +266,12 @@ public class FileInfoController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(value = "queryList", method = RequestMethod.POST)
-	public PageInfo<FileInfo> queryList(@RequestBody FileInfoConditon fileInfoConditon) throws Exception {
+	public PageInfo<FileRegistry> queryList(@RequestBody FileRegistryConditon recordConditon) throws Exception {
 		try {
-			logger.info("FileInfoController>>>queryList>>>fileInfoConditon:" + JSON.toJSONString(fileInfoConditon));
-			return fileInfoService.queryList(fileInfoConditon);
+			logger.info("FileRegistryController>>>queryList>>>recordConditon:" + JSON.toJSONString(recordConditon));
+			return fileRegistryService.queryList(recordConditon);
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>queryList>>>error:" + e.getMessage());
+			logger.error("FileRegistryController>>>queryList>>>error:" + e.getMessage());
 			throw e;
 		}
 	}

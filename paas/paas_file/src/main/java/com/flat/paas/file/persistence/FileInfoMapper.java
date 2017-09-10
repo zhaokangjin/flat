@@ -103,7 +103,7 @@ public interface FileInfoMapper {
 	 * 该接口提供单条查询服务
 	 * @Title: selectByPrimaryKey
 	 * @Description: 单条查询
-	 * @param fileId
+	 * @param record
 	 * @return
 	 */
 	FileInfo selectByPrimaryKey(@Param("fileId")String fileId);
@@ -112,7 +112,7 @@ public interface FileInfoMapper {
 	 * 该接口提供批量查询服务
 	 * @Title: queryList
 	 * @Description: 批量查询
-	 * @param fileId
+	 * @param record
 	 * @return
 	 */
 	List<FileInfo> queryList(FileInfo record);	
