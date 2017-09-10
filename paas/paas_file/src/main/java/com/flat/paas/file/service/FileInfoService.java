@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 
 /**
  * 文件信息服务接口
+ * 
  * @ClassName: FileInfoService
  * @Description: 文件信息服务接口
  * @author: kangjin.zhao
@@ -23,13 +24,13 @@ public interface FileInfoService {
 	FileInfo selectByPrimaryKey(String id);
 
 	/**
-	 * @Title: queryList  	
+	 * @Title: queryList
 	 * @Description: TODO
 	 * @param fileInfo
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	PageInfo<FileInfo> queryList(FileInfoConditon  fileInfoConditon) throws Exception;
+	PageInfo<FileInfo> queryList(FileInfoConditon fileInfoConditon) throws Exception;
 
 	/**
 	 * @Title: insert
@@ -46,31 +47,46 @@ public interface FileInfoService {
 	 * @return
 	 */
 	void insertSelective(FileInfo record);
-	
+
 	/**
 	 * 
-	 * @Title: insertBatch   
-	 * @Description: TODO  
+	 * @Title: insertBatch
+	 * @Description: TODO
 	 * @param record
 	 */
 	void insertBatch(List<FileInfo> record);
+
 	/**
 	 * @Title: deleteByPrimaryKey
 	 * @Description: TODO
 	 * @param fileId
 	 */
 	void deleteByPrimaryKey(String id);
+
 	/**
 	 * 
-	 * @Title: deleteByPrimaryKeyS   
-	 * @Description: TODO  
+	 * @Title: deleteByPrimaryKeyS
+	 * @Description: TODO
 	 * @param id
 	 */
 	void deleteByPrimaryKeySoft(String id);
+
+	/**
+	 * 
+	 * @Title: deleteList
+	 * @Description: TODO
+	 * @param record
+	 */
 	void deleteList(List<FileInfo> record);
-	
+
+	/**
+	 * 
+	 * @Title: deleteListSoft
+	 * @Description: TODO
+	 * @param record
+	 */
 	void deleteListSoft(List<FileInfo> record);
-	
+
 	/**
 	 * @Title: updateByPrimaryKey
 	 * @Description: TODO
@@ -84,5 +100,13 @@ public interface FileInfoService {
 	 * @param fileInfo
 	 */
 	void updateByPrimaryKeySelective(FileInfo record);
+
+	/**
+	 * 
+	 * @Title: updateBatch
+	 * @Description: TODO
+	 * @param record
+	 */
+	void updateList(List<FileInfo> record);
 
 }

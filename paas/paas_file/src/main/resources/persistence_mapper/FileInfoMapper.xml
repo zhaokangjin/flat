@@ -157,52 +157,43 @@
 			<if test="deleteFlag != null">
 				DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
 			</if>
-			<if test="creator != null">
-				CREATOR = #{creator,jdbcType=CHAR},
-			</if>
-			<if test="createTime != null">
-				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-			</if>
 		</set>
 		where FILE_ID = #{fileId,jdbcType=CHAR}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.flat.paas.file.domain.FileInfo">
+		update TFT_FILE_INFO
 		set ORIGINAL_FILE = #{originalFile,jdbcType=VARCHAR},
 		FILEMD5 = #{filemd5,jdbcType=CHAR},
 		ACTUAL_FILE_NAME = #{actualFileName,jdbcType=VARCHAR},
-		DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
-		CREATOR = #{creator,jdbcType=CHAR},
-		CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+		DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
 		where FILE_ID = #{fileId,jdbcType=CHAR}
 	</update>
-	<update id="updateBatch">
+	<update id="updateList" parameterType="com.flat.paas.file.domain.FileInfo">
 		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
-			update TFT_FILE_INFO
-			<set>
-				<if test="originalFile != null">
-					ORIGINAL_FILE = #{item.originalFile,jdbcType=VARCHAR},
-				</if>
-				<if test="filemd5 != null">
-					FILEMD5 = #{item.filemd5,jdbcType=CHAR},
-				</if>
-				<if test="actualFileName != null">
-					ACTUAL_FILE_NAME = #{item.actualFileName,jdbcType=VARCHAR},
-				</if>
-				<if test="deleteFlag != null">
-					DELETE_FLAG = #{item.deleteFlag,jdbcType=CHAR},
-				</if>
-				<if test="creator != null">
-					CREATOR = #{item.creator,jdbcType=CHAR},
-				</if>
-				<if test="createTime != null">
-					CREATE_TIME = #{item.createTime,jdbcType=TIMESTAMP},
-				</if>
-			</set>
-			where FILE_ID = #{fileId,jdbcType=CHAR}
+			<if test="item.fileId != null">
+				update TFT_FILE_INFO
+				<set>
+					<if test="item.originalFile != null">
+						ORIGINAL_FILE = #{item.originalFile,jdbcType=VARCHAR},
+					</if>
+					<if test="item.filemd5 != null">
+						FILEMD5 = #{item.filemd5,jdbcType=CHAR},
+					</if>
+					<if test="item.actualFileName != null">
+						ACTUAL_FILE_NAME = #{item.actualFileName,jdbcType=VARCHAR},
+					</if>
+					<if test="item.deleteFlag != null">
+						DELETE_FLAG = #{item.deleteFlag,jdbcType=CHAR},
+					</if>
+				</set>
+				where FILE_ID = #{item.fileId,jdbcType=CHAR}
+			</if>
+			<if test="item.fileId = null">
+				insert into TFT_FILE_INFO (FILE_ID, ORIGINAL_FILE, FILEMD5 ,ACTUAL_FILE_NAME, DELETE_FLAG, CREATOR, CREATE_TIME) values
+				(
+				#{item.fileId,jdbcType=VARCHAR},#{item.originalFile,jdbcType=VARCHAR}, #{item.filemd5,jdbcType=CHAR}, #{item.actualFileName,jdbcType=VARCHAR}, #{item.deleteFlag,jdbcType=CHAR}, #{item.creator,jdbcType=CHAR}, #{item.createTime,jdbcType=TIMESTAMP}
+				)
+			</if>
 		</foreach>
-
 	</update>
-
-
-
 </mapper>

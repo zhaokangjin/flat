@@ -1,6 +1,6 @@
 package com.flat.paas.file.controller;
 
-import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.flat.paas.file.domain.FileInfo;
-import com.flat.paas.file.domain.condition.BeanUtils;
 import com.flat.paas.file.domain.condition.FileInfoConditon;
 import com.flat.paas.file.service.FileInfoService;
 import com.github.pagehelper.PageInfo;
@@ -39,6 +38,7 @@ public class FileInfoController {
 	public String insert(@RequestBody FileInfo fileInfo) {
 		try {
 			logger.info("FileInfoController>>>insert>>>fileInfo:" +JSON.toJSONString(fileInfo));
+			fileInfo.setCreateTime(new Date());
 			fileInfoService.insert(fileInfo);
 			return fileInfo.getFileId();
 		} catch (Exception e) {
@@ -51,6 +51,7 @@ public class FileInfoController {
 		try {
 			logger.info("FileInfoController>>>insertSelective>>>fileInfo:" +JSON.toJSONString(fileInfoList));
 			for(int i=0;i<fileInfoList.size();i++){
+				fileInfoList.get(i).setCreateTime(new Date());
 				fileInfoList.get(i).setFileId(UUID.randomUUID().toString());
 			} 
 			fileInfoService.insertBatch(fileInfoList);
@@ -130,7 +131,8 @@ public class FileInfoController {
 	 * @Title: queryList   
 	 * @Description: 规范：所有需要分页查询的接口,条件对象必须继承page对象，前台参数必须给定。需要按指定字段排序的，必须给出该字段对应的属性以及升序还是降序规则
 	 * @param fileInfoConditon  
-	 * 例如:{"fileInfo":{"deleteFlag":"Y"},"page":{"pageNum":"1","pageSize":"4"},"fieldName":"fileId","sort":"desc"}
+	 * 例如:
+	 * {"fileInfo":{"deleteFlag":"Y"},"page":{"pageNum":"1","pageSize":"4"},"fieldName":"fileId","sort":"desc"}
 	 * fieldName 执行需要排序的列;sort 指定升序还是降序(DESC降序,ASC升序);page 分页查询条件对象 pageNum 查询当前页，pageSize查出当前页面大小
 	 * @return PageInfo<FileInfo> 
 	 * 返回带有分页参数的对象,如果入参不带page对象,那么将会查询全部数据，且不带排序功能。当数据量很大的时候，会给前台带来严重的压力，请慎用
@@ -147,6 +149,15 @@ public class FileInfoController {
 			throw e;
 		}
 	}
+	/**
+	 * 根据主键全量更新整条数据
+	 * @Title: updateByPrimaryKey   
+	 * @Description: TODO  
+	 * @param fileInfo {"actualFileName":"2afsdfddas19.xls","createTime":1504936602000,"creator":"KANGJIN.ZHAO","deleteFlag":"Y","fileId":"ac93f6e4-9523-11e7-9334-00163e12ae01","filemd5":"2afsdfddas19","originalFile":"ceshi19"}
+	 * @return 1
+	 * @exception e
+	 */
+	@RequestMapping(value="updateByPrimaryKey",method=RequestMethod.POST)
 	public int updateByPrimaryKey(@RequestBody FileInfo fileInfo){
 		try {
 			logger.info("FileInfoController>>>updateByPrimaryKey>>>fileInfo:" +JSON.toJSONString(fileInfo));
@@ -157,13 +168,44 @@ public class FileInfoController {
 			throw e;
 		}
 	}
+	/**
+	 * 根据主键全量更新部分数据
+	 * @Title: updateByPrimaryKeySelective   
+	 * @Description: 根据主键局部更新某些字段 
+	 * @param fileInfo 
+	 * 例如
+	 * {"actualFileName":"测试更新.xls","createTime":1504936602000,"fileId":"ac93f6e4-9523-11e7-9334-00163e12ae01","filemd5":"2afsdfddas19","originalFile":"的    端到端 "}
+	 * @return 1
+	 * @exception e
+	 */
+	@RequestMapping(value="updateByPrimaryKeySelective",method=RequestMethod.POST)
 	public int updateByPrimaryKeySelective(@RequestBody FileInfo fileInfo){
 		try {
-			logger.info("FileInfoController>>>updateByPrimaryKey>>>fileInfo:" +JSON.toJSONString(fileInfo));
+			logger.info("FileInfoController>>>updateByPrimaryKeySelective>>>fileInfo:" +JSON.toJSONString(fileInfo));
 			fileInfoService.updateByPrimaryKeySelective(fileInfo);
 			return 1;
 		} catch (Exception e) {
-			logger.error("FileInfoController>>>updateByPrimaryKey>>>error:" + e.getMessage());
+			logger.error("FileInfoController>>>updateByPrimaryKeySelective>>>error:" + e.getMessage());
+			throw e;
+		}
+	}
+	/**
+	 * 
+	 * @Title: updateBatch   
+	 * @Description: TODO  
+	 * @param fileInfoList
+	 * 更新集合
+	 * [{"fileId":"ac93f6e4-9523-11e7-9334-00163e12ae01","originalFile":"的    端到端 ","filemd5":"2afsdfddas19","actualFileName":"康进测试更新.xls","deleteFlag":"1","creator":"KANGJIN.ZHAO","createTime":1504936602000},{"fileId":"2","originalFile":"1","filemd5":"1","actualFileName":"1","deleteFlag":"1","creator":"1","createTime":1514736000000},{"fileId":"000f0761-94ab-11e7-9334-00163e12ae01","originalFile":"ceshi31544","filemd5":"2afsdfddas31544","actualFileName":"2afsdfddas31544.xls","deleteFlag":"1","creator":"KANGJIN.ZHAO","createTime":1504884773000},{"fileId":"000a178f-94ab-11e7-9334-00163e12ae01","originalFile":"ceshi31543","filemd5":"2afsdfddas31543","actualFileName":"2afsdfddas31543.xls","deleteFlag":"1","creator":"KANGJIN.ZHAO","createTime":1504884773000}]
+	 * @return
+	 */
+	@RequestMapping(value="updateOrInsertBatch",method=RequestMethod.POST)
+	public int updateOrInsertBatch(@RequestBody List<FileInfo> fileInfoList){
+		try {
+			logger.info("FileInfoController>>>updateBatch>>>fileInfo:" +JSON.toJSONString(fileInfoList));
+			fileInfoService.updateList(fileInfoList);
+			return fileInfoList.size();
+		} catch (Exception e) {
+			logger.error("FileInfoController>>>updateBatch>>>error:" + e.getMessage());
 			throw e;
 		}
 	}

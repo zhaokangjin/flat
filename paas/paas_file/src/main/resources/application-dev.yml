@@ -16,7 +16,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_IP:121.41.14.148}:${MYSQL_PORT:3306}/paas_file?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://${MYSQL_IP:121.41.14.148}:${MYSQL_PORT:3306}/paas_file?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
     username: ${MYSQL_USER:root}
     password: ${MYSQL_PWD:1qaz@WSX}
     # connectionURL="jdbc:mysql://121.41.14.148:3306/paas_language" userId="root" password="1qaz@WSX" />

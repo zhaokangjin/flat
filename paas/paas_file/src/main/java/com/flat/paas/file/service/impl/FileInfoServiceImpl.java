@@ -1,6 +1,7 @@
 package com.flat.paas.file.service.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -154,6 +155,23 @@ public class FileInfoServiceImpl implements FileInfoService {
 		}
 		
 	}
-
-
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public void updateList(List<FileInfo> record) {
+		if(null==record || record.size()==0){
+			return;
+		}
+		try {
+			//根据主键确定数据来源是新增还是更新
+			for(int i=0;i<record.size();i++){
+				if(null==record.get(i).getFileId()||record.get(i).getFileId().trim().equals("")){
+					record.get(i).setFileId(UUID.randomUUID().toString());
+				}
+			}
+			fileInfoMapper.updateList(record);
+		} catch (Exception e) {
+			logger.error("FileInfoServiceImpl>>>updateBatch>>>error:"+e.getMessage());
+			throw e;
+		}
+	}
 }

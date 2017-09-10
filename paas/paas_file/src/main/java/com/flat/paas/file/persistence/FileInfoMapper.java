@@ -117,5 +117,5 @@ public interface FileInfoMapper {
 	 * @param record
 	 * @return
 	 */
-	int updateBatch(List<FileInfo> record);
+	void updateList(List<FileInfo> record);
 }
