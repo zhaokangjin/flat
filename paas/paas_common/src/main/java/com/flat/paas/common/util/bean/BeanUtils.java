@@ -1,4 +1,4 @@
-package com.flat.paas.file.domain.condition;
+package com.flat.paas.common.util.bean;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

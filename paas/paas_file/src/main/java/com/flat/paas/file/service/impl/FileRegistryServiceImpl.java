@@ -4,18 +4,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.flat.paas.common.util.bean.BeanUtils;
+import com.flat.paas.common.util.data.Page;
 //import com.flat.paas.file.domain.FileInfo;
 import com.flat.paas.file.domain.FileRegistry;
-import com.flat.paas.file.domain.condition.BeanUtils;
 import com.flat.paas.file.domain.condition.FileRegistryConditon;
-//import com.flat.paas.file.domain.condition.FileInfoConditon;
-import com.flat.paas.file.domain.condition.Page;
 import com.flat.paas.file.persistence.FileInfoMapper;
 import com.flat.paas.file.persistence.FileRegistryMapper;
 import com.flat.paas.file.service.FileRegistryService;

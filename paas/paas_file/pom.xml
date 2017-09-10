@@ -6,11 +6,11 @@
 		<version>${pass-version}</version>
 	</parent>
 	<artifactId>paas_file</artifactId>
-<!-- 	<dependencies>
+	<dependencies>
 		<dependency>
-			<groupId>flat</groupId>
+			<groupId>com.flat</groupId>
 			<artifactId>paas_common</artifactId>
-			<version>${pass-version}</version>
+			<version>1.0.0.1</version>
 		</dependency>
-	</dependencies> -->
+	</dependencies>
 </project>

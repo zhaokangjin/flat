@@ -13,6 +13,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.alibaba.fastjson.JSON;
 import com.flat.paas.file.PaasFileApp;
 import com.flat.paas.file.controller.FileInfoController;
 import com.flat.paas.file.controller.FileRegistryController;
@@ -105,7 +106,7 @@ public class FileRegistryTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.err.println(fileRegistry);
+		System.err.println(JSON.toJSONString(fileRegistry));
 		
 	}
 }

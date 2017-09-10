@@ -6,4 +6,5 @@
 		<version>${pass-version}</version>
 	</parent>
 	<artifactId>paas_common</artifactId>
+	<version>1.0.0.1</version>
 </project>

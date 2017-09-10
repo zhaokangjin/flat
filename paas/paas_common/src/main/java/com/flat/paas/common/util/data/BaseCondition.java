@@ -1,4 +1,4 @@
-package com.flat.paas.file.domain.condition;
+package com.flat.paas.common.util.data;
 
 import java.io.Serializable;
 

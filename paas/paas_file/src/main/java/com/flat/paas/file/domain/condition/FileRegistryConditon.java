@@ -1,5 +1,6 @@
 package com.flat.paas.file.domain.condition;
 
+import com.flat.paas.common.util.data.BaseCondition;
 import com.flat.paas.file.domain.FileRegistry;
 /**
  * @ClassName: FileRegistryConditon   
