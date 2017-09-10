@@ -9,10 +9,35 @@
 		<result column="DELETE_FLAG" jdbcType="CHAR" property="deleteFlag" />
 		<result column="CREATOR" jdbcType="CHAR" property="creator" />
 		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+		<collection column="FILEINFO_LIST" property="fileInfoList" 
+			ofType="com.flat.paas.file.domain.FileInfo"
+			javaType="java.util.ArrayList" select="selectSubTableByForeignKey"/>
 	</resultMap>
 	<sql id="Base_Column_List">
 		FILEMD5, FILE_PATH, RER_COUNT, FILE_SIZE, DELETE_FLAG, CREATOR, CREATE_TIME
 	</sql>
+	<!-- <sql id="Sub_Column_List"> FILE_ID, ORIGINAL_FILE, FILEMD5, ACTUAL_FILE_NAME, DELETE_FLAG, CREATOR, CREATE_TIME </sql> -->
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TFT_FILE_REGISTRY
+		where FILEMD5 = #{primaryKey,jdbcType=CHAR}
+	</select>
+	<resultMap type="com.flat.paas.file.domain.FileInfo" id="subTable">
+		<id column="FILE_ID" jdbcType="CHAR" property="fileId" />
+		<result column="ORIGINAL_FILE" jdbcType="VARCHAR" property="originalFile" />
+		<result column="FILEMD5" jdbcType="CHAR" property="filemd5" />
+		<result column="ACTUAL_FILE_NAME" jdbcType="VARCHAR" property="actualFileName" />
+		<result column="DELETE_FLAG" jdbcType="CHAR" property="deleteFlag" />
+		<result column="CREATOR" jdbcType="CHAR" property="creator" />
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+	<select id="selectSubTableByForeignKey" resultMap="subTable">
+		select
+		FILE_ID, ORIGINAL_FILE, FILEMD5, ACTUAL_FILE_NAME, DELETE_FLAG, CREATOR, CREATE_TIME from
+		TFT_FILE_INFO t
+		<!-- where t.FILEMD5 = #{filemd5,jdbcType=CHAR} -->
+	</select>
 	<insert id="insert" parameterType="com.flat.paas.file.domain.FileRegistry">
 		insert into TFT_FILE_REGISTRY (FILEMD5, FILE_PATH, RER_COUNT,
 		FILE_SIZE, DELETE_FLAG, CREATOR,
@@ -86,7 +111,7 @@
 	<!-- 物理删除 -->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from TFT_FILE_REGISTRY
-		where FILEMD5 = #{id,jdbcType=CHAR}
+		where FILEMD5 = #{primaryKey,jdbcType=CHAR}
 	</delete>
 	<!-- 物理批量删除 -->
 	<delete id="deleteList" parameterType="java.util.List">
@@ -99,7 +124,7 @@
 	<update id="deleteByPrimaryKeySoft" parameterType="com.flat.paas.file.domain.FileRegistry">
 		update TFT_FILE_REGISTRY SET
 		DELETE_FLAG = 'Y'
-		where FILEMD5 = #{id,jdbcType=CHAR}
+		where FILEMD5 = #{primaryKey,jdbcType=CHAR}
 	</update>
 	<!-- 软批量删除 -->
 	<update id="deleteListSoft" parameterType="com.flat.paas.file.domain.FileRegistry">
@@ -170,13 +195,6 @@
 			</if>
 		</foreach>
 	</update>
-
-	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from TFT_FILE_REGISTRY
-		where FILEMD5 = #{id,jdbcType=CHAR}
-	</select>
 	<select id="queryList" parameterType="com.flat.paas.file.domain.FileRegistry" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
@@ -199,4 +217,5 @@
 			AND DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
 		</if>
 	</select>
+
 </mapper>

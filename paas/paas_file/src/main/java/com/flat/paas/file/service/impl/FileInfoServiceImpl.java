@@ -57,9 +57,9 @@ public class FileInfoServiceImpl implements FileInfoService {
 	}	
 	@Override
 	@Transactional(rollbackFor=Exception.class)
-	public void deleteByPrimaryKey(@Param("fileId") String fileId){
+	public void deleteByPrimaryKey(String primaryKey){
 		try {
-			fileInfoMapper.deleteByPrimaryKey(fileId);
+			fileInfoMapper.deleteByPrimaryKey(primaryKey);
 		} catch (Exception e) {
 			logger.error("FileInfoServiceImpl>>>deleteByPrimaryKey>>>error:"+e.getMessage());
 			throw e;
@@ -67,9 +67,9 @@ public class FileInfoServiceImpl implements FileInfoService {
 	}
 	@Override
 	@Transactional(rollbackFor=Exception.class)
-	public void deleteByPrimaryKeySoft(@Param("fileId") String fileId) {
+	public void deleteByPrimaryKeySoft(String primaryKey) {
 		try {
-			fileInfoMapper.deleteByPrimaryKeySoft(fileId);
+			fileInfoMapper.deleteByPrimaryKeySoft(primaryKey);
 		} catch (Exception e) {
 			logger.error("FileInfoServiceImpl>>>deleteByPrimaryKey>>>error:"+e.getMessage());
 			throw e;
@@ -139,9 +139,9 @@ public class FileInfoServiceImpl implements FileInfoService {
 	}
 	@Override
 	@Transactional(rollbackFor=Exception.class)
-	public FileInfo selectByPrimaryKey(@Param("fileId") String fileId) {
+	public FileInfo selectByPrimaryKey(String primaryKey) {
 		try {
-			return fileInfoMapper.selectByPrimaryKey(fileId);
+			return fileInfoMapper.selectByPrimaryKey(primaryKey);
 		} catch (Exception e) {
 			logger.error("FileInfoServiceImpl>>>selectByPrimaryKey>>>error:"+e.getMessage());
 			throw e;
@@ -152,10 +152,11 @@ public class FileInfoServiceImpl implements FileInfoService {
 		try {
 			FileInfo fileInfo=fileInfoConditon.getFileInfo();
 			String field=(String) BeanUtils.getFieldValue(fileInfoConditon,"fieldName");
-			String fieldValue=field.replaceAll("[A-Z]", "_$0").toUpperCase();
 			String sort=(String) BeanUtils.getFieldValue(fileInfoConditon,"sort");
+			String fieldValue=null;
 			String sortByField="";
-			if(null!=field && null!=sort){
+			if(null!=field && !field.trim().equals("") && null!=sort && !sort.trim().equals("")){
+				fieldValue=field.replaceAll("[A-Z]", "_$0").toUpperCase();
 				sortByField=fieldValue+" "+sort.toUpperCase();
 			}
 			Page page=fileInfoConditon.getPage();

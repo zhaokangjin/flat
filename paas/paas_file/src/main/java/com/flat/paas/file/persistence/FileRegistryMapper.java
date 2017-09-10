@@ -42,7 +42,7 @@ public interface FileRegistryMapper {
 	 * @param id
 	 * @return
 	 */
-	int deleteByPrimaryKey(@Param("id")String id);
+	int deleteByPrimaryKey(@Param("primaryKey")String primaryKey);
 	/**
 	 * 该接口提供物理批量删除服务
 	 * @Title: deleteList   
@@ -58,7 +58,7 @@ public interface FileRegistryMapper {
 	 * @Description: 单条软删除  
 	 * @param id
 	 */
-	void deleteByPrimaryKeySoft (@Param("id")String fileId);
+	void deleteByPrimaryKeySoft (@Param("primaryKey")String primaryKey);
 	
 	/**
 	 * 该接口提供批量软删除服务
@@ -101,7 +101,7 @@ public interface FileRegistryMapper {
 	 * @param id
 	 * @return
 	 */
-	FileRegistry selectByPrimaryKey(@Param("id")String id);
+	FileRegistry selectByPrimaryKey(@Param("primaryKey")String primaryKey);
 	
 	/**
 	 * 该接口提供批量查询服务

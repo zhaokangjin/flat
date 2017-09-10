@@ -16,8 +16,6 @@ import com.alibaba.fastjson.JSON;
 import com.flat.paas.file.PaasFileApp;
 import com.flat.paas.file.controller.FileInfoController;
 import com.flat.paas.file.domain.FileInfo;
-import com.flat.paas.file.domain.condition.FileInfoConditon;
-import com.github.pagehelper.PageInfo;
 
 @RunWith(SpringJUnit4ClassRunner.class) // SpringJUnit支持，由此引入Spring-Test框架支持！
 @SpringApplicationConfiguration(classes = PaasFileApp.class) // 指定我们SpringBoot工程的Application启动类
@@ -130,4 +128,5 @@ public class PaasFileAppTest {
 //		PageInfo<FileInfo> pager=fileInfoController.queryList(fileInfoConditon);
 //		System.err.println(JSON.toJSONString(pager));
 	}
+	
 }

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 //import com.flat.paas.file.domain.FileInfo;
@@ -20,7 +21,8 @@ import com.flat.paas.file.service.FileRegistryService;
 import com.github.pagehelper.PageInfo;
 
 import oracle.net.aso.e;
-
+@RestController
+@RequestMapping("fileRegistry")
 public class FileRegistryController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Resource
@@ -235,7 +237,7 @@ public class FileRegistryController {
 	 * 根据映射文件ID查询真实文件的基本信息
 	 * @Title: selectByPrimaryKey
 	 * @Description: 一个相同的文件可能被多个人引用或共享，可以用此信息查询文件的基本信息
-	 * @param record
+	 * @param record  7febf904-71f3-41b1-82c8-b8fc049c
 	 * 例如：{"fileId":"000a178f-94ab-11e7-9334-00163e12ae01"}
 	 * @return FileInfo fileInfo 例如：
 	 * {"fileId":"000a178f-94ab-11e7-9334-00163e12ae01","originalFile":"ceshi31543","filemd5":"2afsdfddas31543","actualFileName":"2afsdfddas31543.xls","deleteFlag":"Y","creator":"KANGJIN.ZHAO","createTime":1504884773000}
@@ -245,7 +247,8 @@ public class FileRegistryController {
 	public FileRegistry selectByPrimaryKey(@RequestBody FileRegistry record) {
 		logger.info("FileRegistryController>>>selectByPrimaryKey>>>record:" + JSON.toJSONString(record));
 		try {
-			return fileRegistryService.selectByPrimaryKey(record.getFilemd5());
+			FileRegistry fileRegistry=fileRegistryService.selectByPrimaryKey(record.getFilemd5());
+			return fileRegistry;
 		} catch (Exception e) {
 			logger.error("FileRegistryController>>>selectByPrimaryKey>>>error:" + e.getMessage());
 			throw e;
@@ -257,7 +260,7 @@ public class FileRegistryController {
 	 * @Title: queryList
 	 * @Description: 规范：所有需要分页查询的接口,条件对象必须继承page对象，前台参数必须给定。需要按指定字段排序的，必须给出该字段对应的属性以及升序还是降序规则
 	 * @param recordConditon
-	 *  例如:
+	 *  例如: 7febf904-71f3-41b1-82c8-b8fc049c
 	 * {"fileInfo":{"deleteFlag":"Y"},"page":{"pageNum":"1","pageSize":"4"},"fieldName":"fileId","sort":"desc"}
 	 *  【注意：】fieldName 执行需要排序的列;sort 指定升序还是降序(DESC降序,ASC升序);page 分页查询条件对象 pageNum 查询当前页，pageSize查出当前页面大小
 	 * @return PageInfo<FileInfo>
@@ -275,4 +278,5 @@ public class FileRegistryController {
 			throw e;
 		}
 	}
+
 }

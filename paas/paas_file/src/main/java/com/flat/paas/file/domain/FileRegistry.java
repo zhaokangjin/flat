@@ -27,10 +27,18 @@ public class FileRegistry {
     // 创建时间 >>>表字段 : CREATE_TIME
     private Date createTime;
     
-    @TableField(exist = false)
-    private List<FileInfo> listFileInfo;
+    @TableField(exist = true)
+    private List<FileInfo> fileInfoList;
     
-    public String getFilemd5() {
+    public List<FileInfo> getFileInfoList() {
+		return fileInfoList;
+	}
+
+	public void setFileInfoList(List<FileInfo> fileInfoList) {
+		this.fileInfoList = fileInfoList;
+	}
+
+	public String getFilemd5() {
         return filemd5;
     }
 
@@ -86,11 +94,4 @@ public class FileRegistry {
         this.createTime = createTime;
     }
 
-	public List<FileInfo> getListFileInfo() {
-		return listFileInfo;
-	}
-
-	public void setListFileInfo(List<FileInfo> listFileInfo) {
-		this.listFileInfo = listFileInfo;
-	}
 }

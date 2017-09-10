@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 //import com.flat.paas.file.domain.FileInfo;
@@ -20,7 +21,7 @@ import com.flat.paas.file.persistence.FileRegistryMapper;
 import com.flat.paas.file.service.FileRegistryService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-
+@Service
 public class FileRegistryServiceImpl implements FileRegistryService {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -136,9 +137,9 @@ public class FileRegistryServiceImpl implements FileRegistryService {
 	}
 	@Override
 	@Transactional(rollbackFor=Exception.class)
-	public FileRegistry selectByPrimaryKey(@Param("fileId") String fileId) {
+	public FileRegistry selectByPrimaryKey(String primaryKey) {
 		try {
-			return fileRegistryMapper.selectByPrimaryKey(fileId);
+			return fileRegistryMapper.selectByPrimaryKey(primaryKey);
 		} catch (Exception e) {
 			logger.error("FileInfoServiceImpl>>>selectByPrimaryKey>>>error:"+e.getMessage());
 			throw e;

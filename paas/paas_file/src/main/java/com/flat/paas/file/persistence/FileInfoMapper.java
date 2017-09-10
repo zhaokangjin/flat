@@ -47,7 +47,7 @@ public interface FileInfoMapper {
 	 * @param fileId
 	 * @return
 	 */
-	int deleteByPrimaryKey(@Param("fileId")String fileId);
+	int deleteByPrimaryKey(@Param("primaryKey")String primaryKey);
 	/**
 	 * 该接口提供物理批量删除服务
 	 * @Title: deleteList   
@@ -63,7 +63,7 @@ public interface FileInfoMapper {
 	 * @Description: 单条软删除  
 	 * @param record
 	 */
-	void deleteByPrimaryKeySoft (@Param("fileId")String fileId);
+	void deleteByPrimaryKeySoft (@Param("primaryKey")String primaryKey);
 	
 	/**
 	 * 该接口提供批量软删除服务
@@ -106,7 +106,7 @@ public interface FileInfoMapper {
 	 * @param record
 	 * @return
 	 */
-	FileInfo selectByPrimaryKey(@Param("fileId")String fileId);
+	FileInfo selectByPrimaryKey(@Param("primaryKey")String primaryKey);
 	
 	/**
 	 * 该接口提供批量查询服务

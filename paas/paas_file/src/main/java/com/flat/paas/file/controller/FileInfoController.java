@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +19,8 @@ import com.flat.paas.file.domain.condition.FileInfoConditon;
 import com.flat.paas.file.service.FileInfoService;
 import com.github.pagehelper.PageInfo;
 
+import oracle.net.aso.e;
+
 /**
  * 
  * @ClassName: FileInfoController
@@ -28,7 +29,6 @@ import com.github.pagehelper.PageInfo;
  * @date:2017年9月7日 下午10:55:33
  */
 @RestController
-@ControllerAdvice
 @RequestMapping("fileInfo")
 public class FileInfoController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());

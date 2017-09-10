@@ -89,7 +89,7 @@
 	<!-- 物理删除 -->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from TFT_FILE_INFO
-		where FILE_ID = #{fileId,jdbcType=CHAR}
+		where FILE_ID = #{primaryKey,jdbcType=CHAR}
 	</delete>
 	<!-- 物理批量删除 -->
 	<delete id="deleteList" parameterType="java.util.List">
@@ -99,10 +99,10 @@
 		</foreach>
 	</delete>
 	<!-- 软删除 -->
-	<update id="deleteByPrimaryKeySoft" parameterType="com.flat.paas.file.domain.FileInfo">
+	<update id="deleteByPrimaryKeySoft" parameterType="java.lang.String">
 		update TFT_FILE_INFO SET
 		DELETE_FLAG = 'Y'
-		where FILE_ID = #{fileId,jdbcType=CHAR}
+		where FILE_ID = #{primaryKey,jdbcType=CHAR}
 	</update>
 	<!-- 软批量删除 -->
 	<update id="deleteListSoft" parameterType="com.flat.paas.file.domain.FileInfo">
@@ -172,7 +172,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from TFT_FILE_INFO
-		where FILE_ID = #{fileId,jdbcType=CHAR}
+		where FILE_ID = #{primaryKey,jdbcType=CHAR}
 	</select>
 	<select id="queryList" parameterType="com.flat.paas.file.domain.FileInfo" resultMap="BaseResultMap">
 		select
