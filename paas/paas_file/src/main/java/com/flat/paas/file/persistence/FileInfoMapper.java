@@ -13,25 +13,6 @@ import com.flat.paas.file.domain.FileInfo;
  * @date:2017年9月8日 上午8:42:00
  */
 public interface FileInfoMapper {
-	
-	/**
-	 * 该接口提供单条查询服务
-	 * @Title: selectByPrimaryKey
-	 * @Description: 单条查询
-	 * @param fileId
-	 * @return
-	 */
-	FileInfo selectByPrimaryKey(@Param("fileId")String fileId);
-	
-	/**
-	 * 该接口提供批量查询服务
-	 * @Title: queryList
-	 * @Description: 批量查询
-	 * @param fileId
-	 * @return
-	 */
-	List<FileInfo> selectList(FileInfo record);	
-	
 	/**
 	 * 该接口提供单条新增服务
 	 * @Title: insert
@@ -118,4 +99,21 @@ public interface FileInfoMapper {
 	 * @return
 	 */
 	void updateList(List<FileInfo> record);
+	/**
+	 * 该接口提供单条查询服务
+	 * @Title: selectByPrimaryKey
+	 * @Description: 单条查询
+	 * @param fileId
+	 * @return
+	 */
+	FileInfo selectByPrimaryKey(@Param("fileId")String fileId);
+	
+	/**
+	 * 该接口提供批量查询服务
+	 * @Title: queryList
+	 * @Description: 批量查询
+	 * @param fileId
+	 * @return
+	 */
+	List<FileInfo> queryList(FileInfo record);	
 }

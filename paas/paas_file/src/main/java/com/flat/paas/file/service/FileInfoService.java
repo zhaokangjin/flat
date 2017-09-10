@@ -15,22 +15,6 @@ import com.github.pagehelper.PageInfo;
  * @date:2017年9月7日 下午10:01:51
  */
 public interface FileInfoService {
-	/**
-	 * @Title: selectByPrimaryKey
-	 * @Description: TODO
-	 * @param fileId
-	 * @return
-	 */
-	FileInfo selectByPrimaryKey(String id);
-
-	/**
-	 * @Title: queryList
-	 * @Description: TODO
-	 * @param fileInfo
-	 * @return
-	 * @throws Exception
-	 */
-	PageInfo<FileInfo> queryList(FileInfoConditon fileInfoConditon) throws Exception;
 
 	/**
 	 * @Title: insert
@@ -108,5 +92,21 @@ public interface FileInfoService {
 	 * @param record
 	 */
 	void updateList(List<FileInfo> record);
+	
+	/**
+	 * @Title: selectByPrimaryKey
+	 * @Description: TODO
+	 * @param fileId
+	 * @return
+	 */
+	FileInfo selectByPrimaryKey(String id);
 
+	/**
+	 * @Title: queryList
+	 * @Description: TODO
+	 * @param fileInfo
+	 * @return
+	 * @throws Exception
+	 */
+	PageInfo<FileInfo> queryList(FileInfoConditon fileInfoConditon) throws Exception;
 }

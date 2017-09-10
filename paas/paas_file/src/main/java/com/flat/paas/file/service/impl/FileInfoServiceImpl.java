@@ -95,44 +95,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 			throw e;
 		}
 	}
-	@Override
-	@Transactional(rollbackFor=Exception.class)
-	public FileInfo selectByPrimaryKey(@Param("fileId") String fileId) {
-		try {
-			return fileInfoMapper.selectByPrimaryKey(fileId);
-		} catch (Exception e) {
-			logger.error("FileInfoServiceImpl>>>selectByPrimaryKey>>>error:"+e.getMessage());
-			throw e;
-		}
-	}
-	@Override
-	public PageInfo<FileInfo> queryList(FileInfoConditon  fileInfoConditon) throws Exception {
-		try {
-			FileInfo fileInfo=fileInfoConditon.getFileInfo();
-			String field=(String) BeanUtils.getFieldValue(fileInfoConditon,"fieldName");
-			String fieldValue=field.replaceAll("[A-Z]", "_$0").toUpperCase();
-			String sort=(String) BeanUtils.getFieldValue(fileInfoConditon,"sort");
-			String sortByField="";
-			if(null!=field && null!=sort){
-				sortByField=fieldValue+" "+sort.toUpperCase();
-			}
-			Page page=fileInfoConditon.getPage();
-			if(null!=page){
-				int pageNum=page.getPageNum();
-				int pageSize=page.getPageSize();
-				if(pageNum>0 && pageSize>0){
-					//分页查询
-					PageHelper.startPage(pageNum, pageSize,sortByField);  
-				}
-			}
-			List<FileInfo> list= fileInfoMapper.selectList(fileInfo);
-			PageInfo<FileInfo> pageData = new PageInfo<FileInfo>(list);
-			return pageData;
-		} catch (Exception e) {
-			logger.error("FileInfoServiceImpl>>>queryList>>>error:"+e.getMessage());
-			throw e;
-		}
-	}
+
 	@Override
 	@Transactional(rollbackFor=Exception.class)
 	public void updateByPrimaryKey(FileInfo fileInfo) {
@@ -171,6 +134,44 @@ public class FileInfoServiceImpl implements FileInfoService {
 			fileInfoMapper.updateList(record);
 		} catch (Exception e) {
 			logger.error("FileInfoServiceImpl>>>updateBatch>>>error:"+e.getMessage());
+			throw e;
+		}
+	}
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public FileInfo selectByPrimaryKey(@Param("fileId") String fileId) {
+		try {
+			return fileInfoMapper.selectByPrimaryKey(fileId);
+		} catch (Exception e) {
+			logger.error("FileInfoServiceImpl>>>selectByPrimaryKey>>>error:"+e.getMessage());
+			throw e;
+		}
+	}
+	@Override
+	public PageInfo<FileInfo> queryList(FileInfoConditon  fileInfoConditon) throws Exception {
+		try {
+			FileInfo fileInfo=fileInfoConditon.getFileInfo();
+			String field=(String) BeanUtils.getFieldValue(fileInfoConditon,"fieldName");
+			String fieldValue=field.replaceAll("[A-Z]", "_$0").toUpperCase();
+			String sort=(String) BeanUtils.getFieldValue(fileInfoConditon,"sort");
+			String sortByField="";
+			if(null!=field && null!=sort){
+				sortByField=fieldValue+" "+sort.toUpperCase();
+			}
+			Page page=fileInfoConditon.getPage();
+			if(null!=page){
+				int pageNum=page.getPageNum();
+				int pageSize=page.getPageSize();
+				if(pageNum>0 && pageSize>0){
+					//分页查询
+					PageHelper.startPage(pageNum, pageSize,sortByField);  
+				}
+			}
+			List<FileInfo> list= fileInfoMapper.queryList(fileInfo);
+			PageInfo<FileInfo> pageData = new PageInfo<FileInfo>(list);
+			return pageData;
+		} catch (Exception e) {
+			logger.error("FileInfoServiceImpl>>>queryList>>>error:"+e.getMessage());
 			throw e;
 		}
 	}

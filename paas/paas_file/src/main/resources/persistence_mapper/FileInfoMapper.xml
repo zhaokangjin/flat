@@ -13,34 +13,7 @@
 	<sql id="Base_Column_List">
 		FILE_ID, ORIGINAL_FILE, FILEMD5, ACTUAL_FILE_NAME, DELETE_FLAG, CREATOR, CREATE_TIME
 	</sql>
-	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from TFT_FILE_INFO
-		where FILE_ID = #{fileId,jdbcType=CHAR}
-	</select>
-	<select id="selectList" parameterType="com.flat.paas.file.domain.FileInfo" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from TFT_FILE_INFO
-		where
-		1=1
-		<if test="fileId!=null">
-			AND FILE_ID = #{fileId,jdbcType=CHAR}
-		</if>
-		<if test="originalFile != null">
-			AND ORIGINAL_FILE = #{originalFile,jdbcType=VARCHAR}
-		</if>
-		<if test="filemd5 != null">
-			AND FILEMD5 = #{filemd5,jdbcType=CHAR}
-		</if>
-		<if test="actualFileName != null">
-			AND ACTUAL_FILE_NAME = #{actualFileName,jdbcType=VARCHAR}
-		</if>
-		<if test="deleteFlag!=null">
-			AND DELETE_FLAG=#{deleteFlag,jdbcType=CHAR}
-		</if>
-	</select>
+
 	<insert id="insert" parameterType="com.flat.paas.file.domain.FileInfo">
 		<selectKey keyProperty="fileId" resultType="java.lang.String" order="BEFORE">
 			SELECT UUID()
@@ -196,4 +169,32 @@
 			</if>
 		</foreach>
 	</update>
+		<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TFT_FILE_INFO
+		where FILE_ID = #{fileId,jdbcType=CHAR}
+	</select>
+	<select id="queryList" parameterType="com.flat.paas.file.domain.FileInfo" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TFT_FILE_INFO
+		where
+		1=1
+		<if test="fileId!=null">
+			AND FILE_ID = #{fileId,jdbcType=CHAR}
+		</if>
+		<if test="originalFile != null">
+			AND ORIGINAL_FILE = #{originalFile,jdbcType=VARCHAR}
+		</if>
+		<if test="filemd5 != null">
+			AND FILEMD5 = #{filemd5,jdbcType=CHAR}
+		</if>
+		<if test="actualFileName != null">
+			AND ACTUAL_FILE_NAME = #{actualFileName,jdbcType=VARCHAR}
+		</if>
+		<if test="deleteFlag!=null">
+			AND DELETE_FLAG=#{deleteFlag,jdbcType=CHAR}
+		</if>
+	</select>
 </mapper>
