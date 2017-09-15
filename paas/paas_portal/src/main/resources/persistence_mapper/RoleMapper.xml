@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flat.paas.portal.persistence.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.flat.paas.portal.domain.Role">
+    <id column="ROLE_ID" jdbcType="CHAR" property="roleId" />
+    <result column="ROLE_NAME" jdbcType="CHAR" property="roleName" />
+    <result column="DESCR" jdbcType="VARCHAR" property="descr" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ROLE_ID, ROLE_NAME, DESCR
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TPT_ROLE
+    where ROLE_ID = #{roleId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TPT_ROLE
+    where ROLE_ID = #{roleId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.flat.paas.portal.domain.Role">
+    insert into TPT_ROLE (ROLE_ID, ROLE_NAME, DESCR
+      )
+    values (#{roleId,jdbcType=CHAR}, #{roleName,jdbcType=CHAR}, #{descr,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.flat.paas.portal.domain.Role">
+    insert into TPT_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+      <if test="roleName != null">
+        ROLE_NAME,
+      </if>
+      <if test="descr != null">
+        DESCR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=CHAR},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=CHAR},
+      </if>
+      <if test="descr != null">
+        #{descr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.flat.paas.portal.domain.Role">
+    update TPT_ROLE
+    <set>
+      <if test="roleName != null">
+        ROLE_NAME = #{roleName,jdbcType=CHAR},
+      </if>
+      <if test="descr != null">
+        DESCR = #{descr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROLE_ID = #{roleId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.flat.paas.portal.domain.Role">
+    update TPT_ROLE
+    set ROLE_NAME = #{roleName,jdbcType=CHAR},
+      DESCR = #{descr,jdbcType=VARCHAR}
+    where ROLE_ID = #{roleId,jdbcType=CHAR}
+  </update>
+</mapper>

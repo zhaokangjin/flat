@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flat.paas.portal.persistence.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.flat.paas.portal.domain.Permission">
+    <id column="PERMISSION_ID" jdbcType="CHAR" property="permissionId" />
+    <result column="PERMISSION_NAME" jdbcType="CHAR" property="permissionName" />
+    <result column="DESCR" jdbcType="VARCHAR" property="descr" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PERMISSION_ID, PERMISSION_NAME, DESCR
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TPT_PERMISSION
+    where PERMISSION_ID = #{permissionId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TPT_PERMISSION
+    where PERMISSION_ID = #{permissionId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.flat.paas.portal.domain.Permission">
+    insert into TPT_PERMISSION (PERMISSION_ID, PERMISSION_NAME, DESCR
+      )
+    values (#{permissionId,jdbcType=CHAR}, #{permissionName,jdbcType=CHAR}, #{descr,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.flat.paas.portal.domain.Permission">
+    insert into TPT_PERMISSION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        PERMISSION_ID,
+      </if>
+      <if test="permissionName != null">
+        PERMISSION_NAME,
+      </if>
+      <if test="descr != null">
+        DESCR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        #{permissionId,jdbcType=CHAR},
+      </if>
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=CHAR},
+      </if>
+      <if test="descr != null">
+        #{descr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.flat.paas.portal.domain.Permission">
+    update TPT_PERMISSION
+    <set>
+      <if test="permissionName != null">
+        PERMISSION_NAME = #{permissionName,jdbcType=CHAR},
+      </if>
+      <if test="descr != null">
+        DESCR = #{descr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PERMISSION_ID = #{permissionId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.flat.paas.portal.domain.Permission">
+    update TPT_PERMISSION
+    set PERMISSION_NAME = #{permissionName,jdbcType=CHAR},
+      DESCR = #{descr,jdbcType=VARCHAR}
+    where PERMISSION_ID = #{permissionId,jdbcType=CHAR}
+  </update>
+</mapper>

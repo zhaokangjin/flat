@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flat.paas.portal.persistence.BusinessMapper">
+  <resultMap id="BaseResultMap" type="com.flat.paas.portal.domain.Business">
+    <id column="TABLE_ID" jdbcType="CHAR" property="tableId" />
+    <result column="TABLE_SPACE" jdbcType="VARCHAR" property="tableSpace" />
+    <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
+    <result column="ROLE_ID" jdbcType="CHAR" property="roleId" />
+    <result column="PERMISSION_ID" jdbcType="CHAR" property="permissionId" />
+    <result column="DELETE_FLAG" jdbcType="CHAR" property="deleteFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    TABLE_ID, TABLE_SPACE, TABLE_NAME, ROLE_ID, PERMISSION_ID, DELETE_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TPT_BUSINESS
+    where TABLE_ID = #{tableId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TPT_BUSINESS
+    where TABLE_ID = #{tableId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.flat.paas.portal.domain.Business">
+    insert into TPT_BUSINESS (TABLE_ID, TABLE_SPACE, TABLE_NAME, 
+      ROLE_ID, PERMISSION_ID, DELETE_FLAG
+      )
+    values (#{tableId,jdbcType=CHAR}, #{tableSpace,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR}, 
+      #{roleId,jdbcType=CHAR}, #{permissionId,jdbcType=CHAR}, #{deleteFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.flat.paas.portal.domain.Business">
+    insert into TPT_BUSINESS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tableId != null">
+        TABLE_ID,
+      </if>
+      <if test="tableSpace != null">
+        TABLE_SPACE,
+      </if>
+      <if test="tableName != null">
+        TABLE_NAME,
+      </if>
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+      <if test="permissionId != null">
+        PERMISSION_ID,
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tableId != null">
+        #{tableId,jdbcType=CHAR},
+      </if>
+      <if test="tableSpace != null">
+        #{tableSpace,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null">
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=CHAR},
+      </if>
+      <if test="permissionId != null">
+        #{permissionId,jdbcType=CHAR},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.flat.paas.portal.domain.Business">
+    update TPT_BUSINESS
+    <set>
+      <if test="tableSpace != null">
+        TABLE_SPACE = #{tableSpace,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null">
+        TABLE_NAME = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        ROLE_ID = #{roleId,jdbcType=CHAR},
+      </if>
+      <if test="permissionId != null">
+        PERMISSION_ID = #{permissionId,jdbcType=CHAR},
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where TABLE_ID = #{tableId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.flat.paas.portal.domain.Business">
+    update TPT_BUSINESS
+    set TABLE_SPACE = #{tableSpace,jdbcType=VARCHAR},
+      TABLE_NAME = #{tableName,jdbcType=VARCHAR},
+      ROLE_ID = #{roleId,jdbcType=CHAR},
+      PERMISSION_ID = #{permissionId,jdbcType=CHAR},
+      DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
+    where TABLE_ID = #{tableId,jdbcType=CHAR}
+  </update>
+</mapper>
